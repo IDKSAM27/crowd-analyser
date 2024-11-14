@@ -1,1 +1,66 @@
-pip install opencv-python-headless torch pillow playsound numpy scikit-image
+*OPEN THIS TEXT IN THE VSCODE ITSELF*
+
+installation of yolov5, which would be from github repo (not yet)
+
+installation of sort.py, again from git repo (not yet)
+
+try to create a virtual environment for this proj, bcs some imports may have discord with others in other project in the local machine
+
+(What is a VIRTUAL ENVIRONMENT?, it is isolated python environment that contains its own dependencies, Interpreter and libraries, commonly used to manage dependencies for different projects w/o causing conflicts) (Why did scrolled horizontally until here!!, you should have typed "Alt + z")
+
+lots of requirement: 
+    I have used: 
+        pip freeze > requirements.txt
+
+    all you have to do is:
+        pip install -r requirements.txt (not yet)
+
+yet after this you may have to install some additional libraries of frameworks if needed, skim the output and terminal to know which one to install
+
+How to create a Virtual Environment:
+    python -m venv .venv    (this will create .venv file in cwd)
+
+(If you wonder where to enter the above, the TERMINAL in your cwd, press "ctrl + `" to open terminal in cwd, make sure you have already opened the head.py)
+(Same as above, all the commands should be entered in the TERMINAL)
+
+How to activate the Virtual Environment:
+    .venv\Scripts\activate  (windows)
+    source .venv/bin/activate   (linux/macOS)
+    
+How to select the Virtual Environment in vscode:
+    ctrl + shift + p    (Command Prompt)
+    Enter "Python: Select Interpreter"
+    Then choose ".venv\Scripts\python" or simply the python version will be visible
+
+install the dependencies:
+    pip install -r requirements.txt
+
+install sort:
+    git clone https://github.com/abewley/sort.git
+    cd sort 
+    pip install .
+    ("pip install ." may not work, you may get an error like "Directory '.' is not installable. Neither 'setup.py' nor 'pyproject.toml' found"), then simply,
+
+    go to file manager, copy or cut the sort.txt from the sort folder (which you have cloned in you working directory)
+    and paste outside the sort folder (where head.py exits)
+
+    then, 
+        pip install scikit-image    (no need as you've installed the dependencies from requirements.txt)
+
+
+install yolov5:
+    git clone https://github.com/ultralytics/yolov5.git
+    cd yolov5
+    pip install -r requirements.txt
+    
+
+    (If you want to verify the installation or want to see what yolov5 can do, look at it like a small demo)
+
+    run:
+        python detect.py --source https://ultralytics.com/image/zidane.jpg
+
+    (this will download the ex. image and detect some objects in it, the output image will be saved in "yolov5/runs/detect/exp" from your cwd)
+
+
+    use this whenever you want to update zolov5:
+        git pull    (in the TERMINAL, in the yolov5 folder)

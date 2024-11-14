@@ -26,6 +26,7 @@ stop_thread = False
 alarm_playing = False
 tracked_ids = set()  # Keep track of unique IDs
 
+# opens file explorer from which the video shall be selected
 def open_video():
     global cap, stop_thread
     stop_thread = False
@@ -38,6 +39,7 @@ def open_video():
         else:
             threading.Thread(target=detect_heads).start()
 
+# opens the webcam or any camera which is linked or connected with the pc
 def start_webcam():
     global cap, stop_thread
     stop_thread = False
