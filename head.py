@@ -71,91 +71,101 @@ def start_webcam():
         print("Webcam opened successfully.")  # Debugging output
         threading.Thread(target=detect_people).start()  # Start detection in a new thread
 
+# Alarm will only sound once every 10 seconds
+last_alarm_time = 0
+alarm_interval = 10  
+
 def play_alarm():
-    global alarm_playing
-    if not alarm_playing:  # Prevent multiple alarms from playing simultaneously
+    global last_alarm_time
+    current_time = time.time()
+    if not alarm_playing and (current_time - last_alarm_time > alarm_interval):
         alarm_playing = True
-        print("Playing alarm sound.")  # Debugging output
+        last_alarm_time = current_time
         playsound(r"alarm.mp3")
         alarm_playing = False
 
 #starts to detect heads of people in every 5th frame of the vid
 #TODO:  rectangular box issue
 def detect_people():
-    global cap, stop_thread, tracked_ids, current_ids
 
-    print("Starting people detection...")  # Debugging output
+    try:
+        global cap, stop_thread, tracked_ids, current_ids
 
-    frame_count = 0
-    process_interval = 5  # Process every 5 frames
+        print("Starting people detection...")  # Debugging output
 
-    while cap.isOpened() and not stop_thread:
-        ret, frame = cap.read()
-        if not ret:
-            print("Warning: Could not read frame. Exiting detection loop.")
-            break
+        frame_count = 0
+        process_interval = 5  # Process every 5 frames
 
-        frame_count += 1
-        if frame_count % process_interval != 0:
-            continue
-        
-        frame = cv2.resize(frame, (640, 480))
-        results = model(frame)
+        while cap.isOpened() and not stop_thread:
+            ret, frame = cap.read()
+            if not ret:
+                print("Warning: Could not read frame. Exiting detection loop.")
+                break
 
-        # Extract bounding box results for 'person' class
-        people = results.xyxy[0].cpu().numpy()
-        people = [p for p in people if int(p[5]) == 0]  # Class 0 corresponds to 'person'
+            frame_count += 1
+            if frame_count % process_interval != 0:
+                continue
+            
+            frame = cv2.resize(frame, (640, 480))
+            results = model(frame)
 
-        # Prepare detections for SORT tracker (format: [x1, y1, x2, y2, score])
-        detections = [[x1, y1, x2, y2, conf] for x1, y1, x2, y2, conf, _ in people]
+            # Extract bounding box results for 'person' class
+            people = results.xyxy[0].cpu().numpy()
+            people = [p for p in people if int(p[5]) == 0]  # Class 0 corresponds to 'person'
 
-        # Update the SORT tracker
-        tracked_objects = tracker.update(np.array(detections))
+            # Prepare detections for SORT tracker (format: [x1, y1, x2, y2, score])
+            detections = [[x1, y1, x2, y2, conf] for x1, y1, x2, y2, conf, _ in people]
 
-        # Track and count unique person IDs
-        current_ids = set()  # Reset for current frame
-        for x1, y1, x2, y2, track_id in tracked_objects:
-            x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
-            track_id = int(track_id)
-            current_ids.add(track_id)
+            # Update the SORT tracker
+            tracked_objects = tracker.update(np.array(detections))
 
-            # Calculate the head region (e.g., top 20% of the bounding box)
-            head_height = int(0.25 * (y2 - y1))  # Adjust the fraction here for accuracy
-            head_y2 = y1 + head_height
+            # Track and count unique person IDs
+            current_ids = set()  # Reset for current frame
+            for x1, y1, x2, y2, track_id in tracked_objects:
+                x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
+                track_id = int(track_id)
+                current_ids.add(track_id)
 
-            # Draw bounding box for the head region only
-            cv2.rectangle(frame, (x1, y1), (x2, head_y2), (0, 255, 0), 2)
-            cv2.putText(frame, f"ID {track_id}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+                # Calculate the head region (e.g., top 20% of the bounding box)
+                head_height = int(0.25 * (y2 - y1))  # Adjust the fraction here for accuracy
+                head_y2 = y1 + head_height
 
-        # Update the tracked_ids set to count unique detections
-        tracked_ids.update(current_ids)
+                # Draw bounding box for the head region only
+                cv2.rectangle(frame, (x1, y1), (x2, head_y2), (0, 255, 0), 2)
+                cv2.putText(frame, f"ID {track_id}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
 
-        # Update the count labels
-        lbl_total_count.config(text=f"Total People Appeared: {len(tracked_ids)}")
-        lbl_current_count.config(text=f"Current People in Frame: {len(current_ids)}")
-        lbl_total_count.update_idletasks()
-        lbl_current_count.update_idletasks()
+            # Update the tracked_ids set to count unique detections
+            tracked_ids.update(current_ids)
 
-        # Play the alarm if more than 10 unique people are detected
-        if len(tracked_ids) > 10:
-            threading.Thread(target=play_alarm).start()
+            # Update the count labels
+            lbl_total_count.config(text=f"Total People Appeared: {len(tracked_ids)}")
+            lbl_current_count.config(text=f"Current People in Frame: {len(current_ids)}")
+            lbl_total_count.update_idletasks()
+            lbl_current_count.update_idletasks()
 
-        # Display the frame in the Tkinter window
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        img = Image.fromarray(frame_rgb)
-        imgtk = ImageTk.PhotoImage(image=img)
-        lbl_video.imgtk = imgtk
-        lbl_video.configure(image=imgtk)
-        
-        root.update()
+            # Play the alarm if more than 10 unique people are detected
+            if len(tracked_ids) > 10:
+                threading.Thread(target=play_alarm).start()
 
-        # Optional: Slow down processing to reduce CPU load
-        time.sleep(0.03)
+            # Display the frame in the Tkinter window
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            img = Image.fromarray(frame_rgb)
+            imgtk = ImageTk.PhotoImage(image=img)
+            lbl_video.imgtk = imgtk
+            lbl_video.configure(image=imgtk)
 
-    # Release the video capture object
-    cap.release()
-    cv2.destroyAllWindows()
-    print("Video capture released.")  # Debugging output
+            root.update()
+
+            # Optional: Slow down processing to reduce CPU load
+            time.sleep(0.03)
+
+        # Release the video capture object
+        cap.release()
+        cv2.destroyAllWindows()
+        print("Video capture released.")  # Debugging output
+    except Exception as e:
+        print(f"Error in detection loop: {e}")
+        stop_detection() # Ensure resources are released 
 
 def stop_detection():
     global stop_thread, tracked_ids, current_ids
@@ -193,3 +203,7 @@ btn_stop.pack(side=tk.LEFT, padx=10)
 # Run the main Tkinter loop
 root.mainloop()
 #some slight improvements please check it, make any changes if necessary
+
+#loading yolo in a seperate thread, should make the deploy faster
+#detecting head in every 5th frame of the video, to reduce the load on cpu, we can change it accordingly, or remove it if any problems persist
+#created seperate alarm thread with timer, to avoid overlapping alarm sounds
