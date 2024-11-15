@@ -25,7 +25,7 @@ try:
         print("YOLOv5 model loaded successfully.")
 
     threading.Thread(target=load_model).start()
-    
+
 except Exception as e:
     print(f"Error loading YOLOv5 model: {e}")
 
@@ -79,16 +79,25 @@ def play_alarm():
         playsound(r"alarm.mp3")
         alarm_playing = False
 
+#starts to detect heads of people in every 5th frame of the vid
+#TODO:  rectangular box issue
 def detect_people():
     global cap, stop_thread, tracked_ids, current_ids
 
     print("Starting people detection...")  # Debugging output
 
+    frame_count = 0
+    process_interval = 5  # Process every 5 frames
+
     while cap.isOpened() and not stop_thread:
         ret, frame = cap.read()
         if not ret:
-            print("Warning: Could not read frame. Exiting detection loop.")  # Debugging output
+            print("Warning: Could not read frame. Exiting detection loop.")
             break
+
+        frame_count += 1
+        if frame_count % process_interval != 0:
+            continue
         
         frame = cv2.resize(frame, (640, 480))
         results = model(frame)
