@@ -18,16 +18,15 @@ root.geometry("800x650")
 root.resizable(width=False, height=True)
 
 # Load the YOLOv5 model
-try:
-    def load_model():
-        global model
+def load_model():
+    global model
+    try:
         model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
         print("YOLOv5 model loaded successfully.")
+    except Exception as e:
+        print(f"Error loading YOLOv5 model: {e}")
 
-    threading.Thread(target=load_model).start()
-
-except Exception as e:
-    print(f"Error loading YOLOv5 model: {e}")
+threading.Thread(target=load_model).start()
 
 # Initialize SORT tracker
 tracker = Sort(max_age=20, min_hits=3, iou_threshold=0.3)
@@ -86,6 +85,7 @@ def play_alarm():
 
 #starts to detect heads of people in every 5th frame of the vid
 #TODO:  rectangular box issue
+#remove try_except(if needed) to understand the rectangle box issue
 def detect_people():
 
     try:
@@ -163,6 +163,7 @@ def detect_people():
         cap.release()
         cv2.destroyAllWindows()
         print("Video capture released.")  # Debugging output
+
     except Exception as e:
         print(f"Error in detection loop: {e}")
         stop_detection() # Ensure resources are released 
