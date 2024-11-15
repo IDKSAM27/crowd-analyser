@@ -1,4 +1,7 @@
-*OPEN THIS TEXT IN THE VSCODE ITSELF*
+*VIEW THIS IN MAXIMIZE TAB SIZE AND NOT IN MINIMIZE*
+*VIEW IN THE EDITOR ITSELF IF POSSIBLE*
+
+**Clone this repository into your current working directory(cwd) of your choice.**
 
 installation of yolov5, which would be from github repo (not yet)
 
@@ -6,10 +9,10 @@ installation of sort.py, again from git repo (not yet)
 
 try to create a virtual environment for this proj, bcs some imports may have discord with others in other project in the local machine
 
-(What is a VIRTUAL ENVIRONMENT?, it is isolated python environment that contains its own dependencies, Interpreter and libraries, commonly used to manage dependencies for different projects w/o causing conflicts) (Why did scrolled horizontally until here!!, you should have typed "Alt + z")
+(What is a VIRTUAL ENVIRONMENT?, it is isolated python environment that contains its own dependencies, Interpreter and libraries, commonly used to manage dependencies for different projects w/o causing conflicts)
 
 lots of requirement: 
-    I have used: 
+    I have used: (no need for you)
         pip freeze > requirements.txt
 
     all you have to do is:
@@ -17,20 +20,32 @@ lots of requirement:
 
 yet after this you may have to install some additional libraries of frameworks if needed, skim the output and terminal to know which one to install
 
-How to create a Virtual Environment:
-    python -m venv .venv    (this will create .venv file in cwd)
 
-(If you wonder where to enter the above, the TERMINAL in your cwd, press "ctrl + `" to open terminal in cwd, make sure you have already opened the head.py)
-(Same as above, all the commands should be entered in the TERMINAL)
-
-How to activate the Virtual Environment:
-    .venv\Scripts\activate  (windows)
-    source .venv/bin/activate   (linux/macOS)
-    
-How to select the Virtual Environment in vscode:
-    ctrl + shift + p    (Command Prompt)
-    Enter "Python: Select Interpreter"
-    Then choose ".venv\Scripts\python" or simply the python version will be visible
+(resize accordingly to see the whole table)
+========================================================================================================================================================
+|                                                                                           |
+|    How to create a Virtual Environment:                                                   |	
+|        python -m venv .venv    (this will create .venv file in cwd)                       |
+|                                                                                           |
+|    (If you wonder where to enter the above, the TERMINAL in your cwd, press "ctrl + `"    |
+|    (depends on the IDE or editor)to open terminal in cwd, make sure you have already      |       {IF YOU'RE CREATING IT VIA NATIVE TERMINAL LIKE CMD} 
+|    opened the head.py)                                                                    |       {POWERSHELL,ETC, USE THE COMMANDS FROM THE LEFT TABLE} 
+|    (Same as above, all the commands should be entered in the TERMINAL)                    |
+|                                                                                           OR      SEARCH HOW TO ENABLE VIRTUAL ENVIRONMENT ACCORDING
+|    How to activate the Virtual Environment:                                               |       TO YOUR IDE OR CODE EDITOR.  
+|        .venv\Scripts\activate  (windows)                                                  |
+|        source .venv/bin/activate   (linux/macOS)                                          |       P.S., IT IS QUITE EASY AND HASLE FREE.
+|                                                                                           |
+|   #ONLY APPLICABLE FOR VSCODE, WHATEVER PRESENT IN {}                                     |   
+|   { How to select the Virtual Environment in vscode:                                    } |
+|   {     ctrl + shift + p    (Command Prompt)                                            } |
+|   {     Enter "Python: Select Interpreter"                                              } |
+|   {     Then choose ".venv\Scripts\python" or simply the python version will be visible } |
+|                                                                                           |   
+|   How to deactivate Virtual Environment:                                                  |    
+|       simply put "deactivate" in the terminal                                             |
+|                                                                                           |
+========================================================================================================================================================
 
 install the dependencies:
     pip install -r requirements.txt
@@ -64,3 +79,6 @@ install yolov5:
 
     use this whenever you want to update zolov5:
         git pull    (in the TERMINAL, in the yolov5 folder)
+
+
+Finally run the head.py and enjoy detecting people!!!

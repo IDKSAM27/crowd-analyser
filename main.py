@@ -1,3 +1,13 @@
+#==================================================================================================
+
+#the base code of this project, it has nothing to do with the working project!!
+
+#you can delete this file if you want.
+
+#best way to understand the base of this project.
+
+#==================================================================================================
+
 import cv2
 import tkinter as tk
 from tkinter import messagebox, filedialog
