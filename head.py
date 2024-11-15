@@ -19,8 +19,13 @@ root.resizable(width=False, height=True)
 
 # Load the YOLOv5 model
 try:
-    model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
-    print("YOLOv5 model loaded successfully.")
+    def load_model():
+        global model
+        model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+        print("YOLOv5 model loaded successfully.")
+
+    threading.Thread(target=load_model).start()
+    
 except Exception as e:
     print(f"Error loading YOLOv5 model: {e}")
 
