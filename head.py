@@ -22,8 +22,10 @@ def load_model():
     global model
     try:
         model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+        lbl_status.config(text="Model loaded successfully.")
         print("YOLOv5 model loaded successfully.")
     except Exception as e:
+        lbl_status.config(text="Failed to load model.")
         print(f"Error loading YOLOv5 model: {e}")
 
 threading.Thread(target=load_model).start()
@@ -187,6 +189,9 @@ lbl_total_count.pack()
 
 lbl_current_count = tk.Label(root, text="Current People in Frame: 0", font=("Arial", 14))
 lbl_current_count.pack()
+
+lbl_status = tk.Label(root, text="Loading model...", font=("Arial", 14))
+lbl_status.pack()
 
 # Frame for buttons
 button_frame = tk.Frame(root)
