@@ -1,6 +1,8 @@
 *VIEW THIS IN MAXIMIZE TAB SIZE AND NOT IN MINIMIZE*
 *VIEW IN THE EDITOR ITSELF IF POSSIBLE*
 
+**MAKE SURE PYTHON 3.7 OR ABOVE IS INSTALLED IN YOUR MACHINE TO RUN THIS PROJECT**
+
 **Clone this repository into your current working directory(cwd) of your choice.**
 
 installation of yolov5, which would be from github repo (not yet)
@@ -82,6 +84,8 @@ install yolov5:
 
 
 Finally run the head.py and enjoy detecting people!!!
+
+IF! ok IF there are some modules missing (I always make sure to update my requirements.txt) please pip install those modules, everything else would be just fine!
 
 ===============================================================================================================================================================================
 
