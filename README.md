@@ -50,7 +50,7 @@ Install the required libraries using the following command:
 **Clone the project**
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/IDKSAM27/Crowd-analyser
 ```
 
 **Place Alarm File:**
