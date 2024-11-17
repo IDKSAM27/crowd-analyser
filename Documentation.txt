@@ -82,3 +82,23 @@ install yolov5:
 
 
 Finally run the head.py and enjoy detecting people!!!
+
+===============================================================================================================================================================================
+
+You may be asking what is yolov5s.pt file (.pt indicates PyTorch file):
+
+    The yolov5s.pt file is a pre-trained model file for YOLOv5 (You Look Only Once version5) object detection system.
+    it is a PyTorch model that contains the architecture and pre-trained weights used for detecting objects in images 
+    or video streams
+
+    YOLOv5 Versions: YOLOv5 comes in different model sizes, such as:
+
+    yolov5n.pt (nano – smallest and fastest, less accurate)
+    yolov5s.pt (small – faster, good balance)
+    yolov5m.pt (medium – more accurate, slower)
+    yolov5l.pt (large – very accurate, slower)
+    yolov5x.pt (extra-large – most accurate, slowest)
+
+yolov5s.pt which we have used is best for real time object detection, it is lightweight hence ideal for devices with limited 
+computational resources (e.g., mobile devices, laptops, Raspberry Pi)
+It does not have any need for powerful GPUs. 
