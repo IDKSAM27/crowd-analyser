@@ -47,30 +47,30 @@ Install the required libraries using the following command:
 
 ## Usage
 
-**Clone the project**
+### 1. Clone the repository:
 
 ```bash
   git clone https://github.com/IDKSAM27/Crowd-analyser
 ```
 
-**Place Alarm File:**
+### 2. Place Alarm File:
 * Download or save an `alarm.mp3` file in the same directory as the script.
 
-**Run the Application:**
+### 3. Run the Application:
 
 ```bash
   python head.py
 ```
 
-**GUI Operations:**
+### 4. GUI Operations:
 * **Open Video:** Load a video file and start detection.
 * **Start Webcam:** Start real-time head detection using the Webcam
 * **Stop Detection:** Stop video/webcam detection.
 
-**Detection Thresholds:**
-* Trach heads of people in the video or live feed.
-* Displays the total nubmer of unique people and the number of people currently in the frame.
-* Plays an alarm in the total count exceeds 60 unique detection (modifiable in the code).
+### 5. Detection Thresholds:
+* **Track heads** of people in the video or live feed.
+* **Displays** the total nubmer of unique people and the number of people currently in the frame.
+* **Plays an alarm** in the total count exceeds 60 unique detection (modifiable in the code).
 
 
 
