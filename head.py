@@ -1,3 +1,4 @@
+import os
 import cv2
 import torch
 import tkinter as tk
@@ -77,13 +78,21 @@ last_alarm_time = 0
 alarm_interval = 10  
 
 def play_alarm():
-    global last_alarm_time
+    global alarm_playing, last_alarm_time
     current_time = time.time()
     if not alarm_playing and (current_time - last_alarm_time > alarm_interval):
         alarm_playing = True
         last_alarm_time = current_time
-        playsound(r"alarm.mp3")
-        alarm_playing = False
+        try:
+            # Construct the path dynamically
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            alarm_path = os.path.join(script_dir, "alarm.mp3")
+            playsound(alarm_path)
+        except Exception as e:
+            print(f"Error playing alarm: {e}")
+        finally:
+            alarm_playing = False
+
 
 #starts to detect heads of people in every 5th frame of the vid
 #TODO:  rectangular box issue
@@ -146,7 +155,7 @@ def detect_people():
             lbl_current_count.update_idletasks()
 
             # Play the alarm if more than 10 unique people are detected
-            if len(tracked_ids) > 10:
+            if len(tracked_ids) > 55:
                 threading.Thread(target=play_alarm).start()
 
             # Display the frame in the Tkinter window
@@ -213,3 +222,4 @@ root.mainloop()
 #loading yolo in a seperate thread, should make the deploy faster
 #detecting head in every 5th frame of the video, to reduce the load on cpu, we can change it accordingly, or remove it if any problems persist
 #created seperate alarm thread with timer, to avoid overlapping alarm sounds
+#alarm works, make sure to save or download alarm.mp3 and save where this file is present

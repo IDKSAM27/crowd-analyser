@@ -102,3 +102,28 @@ You may be asking what is yolov5s.pt file (.pt indicates PyTorch file):
 yolov5s.pt which we have used is best for real time object detection, it is lightweight hence ideal for devices with limited 
 computational resources (e.g., mobile devices, laptops, Raspberry Pi)
 It does not have any need for powerful GPUs. 
+
+========================================================================================================================================================
+
+Dynamic path finder is used to find alarm.mp3,
+
+|------------------------------------------------------------|
+|Aspect      |   (Dynamic Path)      |   (Static Path)       |
+|------------------------------------------------------------|
+|File Path   | Dynamically constructs| Assumes alarm.mp3 is  |
+|Handling    | the path to alarm.mp3 | in the current working|
+|            | using script's locatn | directory.            |
+|------------------------------------------------------------|
+|Flexibilty  | More flexible, works  | Less flexible, assumes|    
+|            | regardless of where   | a specific working    |
+|            | the script is executed| directory.            |
+|------------------------------------------------------------|
+|Complexity  | More complex due to   | Simpler and shorter.  |               
+|            | the use of os.path    |                       |
+|------------------------------------------------------------| 
+
+Which One to Use?
+    -If you want your script to work regardless of where it's run from (e.g., in an IDE, from the command line, etc.), the Dynamic Path approach 
+    is more robust and portable.
+    -If you are certain that alarm.mp3 will always be in the same directory as the working directory when the script is executed, the static path
+    is simpler but might break if the script is executed from a different directory.
