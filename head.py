@@ -119,6 +119,7 @@ def detect_people():
             if frame_count % process_interval != 0:
                 continue
 
+
             try:
                 frame = cv2.resize(frame, (640, 480))
                 results = model(frame)
