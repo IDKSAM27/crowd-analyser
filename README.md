@@ -25,7 +25,8 @@ to load videos or start webcam-based detection, displays results in real-time, a
 
 ## Documentation(detailed)
 
-[Documentation](https://github.com/IDKSAM27/Crowd-analyser/blob/main/Documentation.txt): read this file for more detailed instructions.
+[Documentation](https://github.com/IDKSAM27/Crowd-analyser/blob/main/Documentation.txt): read this file for more detailed instructions on installation and use.
+(update: I would prefer you to read this first as it has more deep info!)
 
 ## Requirements
 ### Python Version
