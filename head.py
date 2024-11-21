@@ -178,9 +178,40 @@ def detect_people():
     except Exception as e:
         print(f"Error in detection loop: {e}")
 
+def track_hourly_counts():
+    #Track the hourly counts in a background thread.
+    global hourly_counts, tracked_ids, tracking_active
+    while tracking_active:
+            # Get the current hour in HH:MM format
+            current_hour = time.strftime("%d-%m-%Y %H:00")
+
+            # Add/update the count of unique tracked IDs for this hour
+            hourly_counts[current_hour] = len(tracked_ids)
+
+            #Sleep until the next hour
+            current_time = time.time()
+            next_hour = (int(current_time // 3600) + 1) * 3600
+            time.sleep(max(0, next_hour - current_time))
+
+def display_hourly_counts():
+    #Display the stored hourly counts.
+    if not hourly_counts:
+        messagebox.showinfo("Hourly Counts", "No data recorder yet.")
+        return
+
+    counts_str = "\n".join([f"{hour}: {count} people" for hour, count in sorted(hourly_counts.items())])
+    messagebox.showinfo("Hourly Counts", f"Hourly People Counts:\n\n{counts_str}")
+
+# Start the hourly tracking in a separate thread
+hourly_thread = threading.Thread(target= track_hourly_counts, daemon=True)
+hourly_thread.start()
+
 def stop_detection():
     global stop_thread, tracked_ids, current_ids
     stop_thread = True
+
+    tracking_active = False
+
     lbl_video.configure(image='')  # Clear the video display
     lbl_total_count.config(text="Total People Appeared: 0")  # Reset total count display
     lbl_current_count.config(text="Current People in Frame: 0")  # Reset current count display
@@ -213,6 +244,10 @@ btn_webcam.pack(side=tk.LEFT, padx=10)
 
 btn_stop = tk.Button(button_frame, text="Stop Detection", command=stop_detection)
 btn_stop.pack(side=tk.LEFT, padx=10)
+
+# Display button for hourly counts
+btn_display_counts = tk.Button(button_frame, text="Display Hourly Counts", command=display_hourly_counts)
+btn_display_counts.pack(side=tk.LEFT, padx=10)
 
 # Run the main Tkinter loop
 root.mainloop()
