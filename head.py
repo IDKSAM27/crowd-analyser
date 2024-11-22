@@ -110,10 +110,10 @@ def detect_people():
 
         while cap.isOpened() and not stop_thread:
             ret, frame = cap.read()
-            if not ret or frame is None:
-                print("Warning: Invalid frame received. Skipping.")
-                time.sleep(0.1)
-                continue
+            if not ret:
+                print("End of video reached or error reading the video!")
+                # time.sleep(0.1)
+                break
 
             frame_count += 1
             if frame_count % process_interval != 0:
