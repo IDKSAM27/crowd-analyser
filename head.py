@@ -178,84 +178,44 @@ def detect_people():
     except Exception as e:
         print(f"Error in detection loop: {e}")
 
-"""
-hourly_counts = {}
-tracking_active = True
-
-def track_hourly_counts():
-    #Track the hourly counts in a background thread.
-    global hourly_counts, tracked_ids, tracking_active
-    while tracking_active:
-            # (if hourly_counts) Get the current hour in "DD-MM-YYYY HH:MM" format
-            # Get the current minute in "DD-MM-YYYY HH:MM" format
-            current_hour = time.strftime("%d-%m-%Y %H:%M")
-
-            # Add/update the count of unique tracked IDs for this hour
-            hourly_counts[current_hour] = len(tracked_ids)
-
-            #Sleep until the next hour
-            current_time = time.time()
-            next_hour = (int(current_time // 60) + 1) * 60      # 3600 if you want hourly, 60 if you want every minute data 
-            time.sleep(max(0, next_hour - current_time))
-
-def display_hourly_counts():
-    #Display the stored hourly counts.
-    if not hourly_counts:
-        messagebox.showinfo("Hourly Counts", "No data recorder yet.")
-        return
-
-    counts_str = "\n".join([f"{hour}: {count} people" for hour, count in sorted(hourly_counts.items())])
-    messagebox.showinfo("Hourly Counts", f"Hourly People Counts:\n\n{counts_str}")
-"""
-
-# Global dictionary to store minute-wise counts
+# Global dictionary to store hourly counts
 minute_counts = {}
 tracking_active = True
 
 def track_minute_counts():
-    """Track the people count per minute."""
+    """Track the hourly counts in a background thread."""
     global minute_counts, tracked_ids, tracking_active
-    
     while tracking_active:
-        # Get the current minute in "YYYY-MM-DD HH:MM" format
+        # Get the current hour in HH:MM format
         current_minute = time.strftime("%Y-%m-%d %H:%M")
         
-        # Start with an empty set for people detected this minute
-        ids_this_minute = set()
+        # Add/update the count of unique tracked IDs for this hour
+        minute_counts[current_minute] = len(tracked_ids)
         
-        # Monitor for the current minute
-        while time.strftime("%Y-%m-%d %H:%M") == current_minute and tracking_active:
-            ids_this_minute.update(current_ids)  # Add IDs seen during the minute
-            time.sleep(1)  # Sleep for 1 second to avoid unnecessary CPU usage
-        
-        # Log the count for this minute
-        minute_counts[current_minute] = len(ids_this_minute)
+        # Sleep until the next hour
+        current_time = time.time()
+        next_minute = (int(current_time // 60) + 1) * 60
+        time.sleep(max(0, next_minute - current_time))
 
 def display_minute_counts():
-    """Display the stored minute-wise counts in a separate thread to keep the GUI responsive."""
-    def show_counts():
-        if not minute_counts:
-            messagebox.showinfo("Minute Counts", "No data recorded yet.")
-            return
-        
-        counts_str = "\n".join([f"{minute}: {count} people" for minute, count in sorted(minute_counts.items())])
-        messagebox.showinfo("Minute Counts", f"Minute-Wise People Counts:\n\n{counts_str}")
+    """Display the stored hourly counts."""
+    if not minute_counts:
+        messagebox.showinfo("Minute Counts", "No data recorded yet.")
+        return
+    
+    counts_str = "\n".join([f"{minute}: {count} people" for minute, count in sorted(minute_counts.items())])
+    messagebox.showinfo("Minute Counts", f"Minute People Counts:\n\n{counts_str}")
 
-    # Run the function in a separate thread
-    threading.Thread(target=show_counts, daemon=True).start()
-
-"""
-# Start the hourly tracking in a separate thread
-hourly_thread = threading.Thread(target= track_minute_counts, daemon=True)
-hourly_thread.start()
-"""
+# Start the minute tracking in a separate thread
+minute_thread = threading.Thread(target=track_minute_counts, daemon=True)
+minute_thread.start()
 
 
 def stop_detection():
     global stop_thread, tracked_ids, current_ids
     stop_thread = True
 
-    tracking_active = False
+    tracking_active = False  # Stop the minute count tracking
 
     lbl_video.configure(image='')  # Clear the video display
     lbl_total_count.config(text="Total People Appeared: 0")  # Reset total count display
@@ -290,9 +250,10 @@ btn_webcam.pack(side=tk.LEFT, padx=10)
 btn_stop = tk.Button(button_frame, text="Stop Detection", command=stop_detection)
 btn_stop.pack(side=tk.LEFT, padx=10)
 
-# Display button for hourly counts
-btn_display_counts = tk.Button(button_frame, text="Display Analysis", command=track_minute_counts)
+# Add a display button to the GUI
+btn_display_counts = tk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
 btn_display_counts.pack(side=tk.LEFT, padx=10)
+
 
 # Run the main Tkinter loop
 root.mainloop()
