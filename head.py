@@ -178,6 +178,7 @@ def detect_people():
     except Exception as e:
         print(f"Error in detection loop: {e}")
 
+"""
 hourly_counts = {}
 tracking_active = True
 
@@ -187,7 +188,7 @@ def track_hourly_counts():
     while tracking_active:
             # (if hourly_counts) Get the current hour in "DD-MM-YYYY HH:MM" format
             # Get the current minute in "DD-MM-YYYY HH:MM" format
-            current_hour = time.strftime("%d-%m-%Y %HH:MM")
+            current_hour = time.strftime("%d-%m-%Y %H:%M")
 
             # Add/update the count of unique tracked IDs for this hour
             hourly_counts[current_hour] = len(tracked_ids)
@@ -205,10 +206,50 @@ def display_hourly_counts():
 
     counts_str = "\n".join([f"{hour}: {count} people" for hour, count in sorted(hourly_counts.items())])
     messagebox.showinfo("Hourly Counts", f"Hourly People Counts:\n\n{counts_str}")
+"""
 
+# Global dictionary to store minute-wise counts
+minute_counts = {}
+tracking_active = True
+
+def track_minute_counts():
+    """Track the people count per minute."""
+    global minute_counts, tracked_ids, tracking_active
+    
+    while tracking_active:
+        # Get the current minute in "YYYY-MM-DD HH:MM" format
+        current_minute = time.strftime("%Y-%m-%d %H:%M")
+        
+        # Start with an empty set for people detected this minute
+        ids_this_minute = set()
+        
+        # Monitor for the current minute
+        while time.strftime("%Y-%m-%d %H:%M") == current_minute and tracking_active:
+            ids_this_minute.update(current_ids)  # Add IDs seen during the minute
+            time.sleep(1)  # Sleep for 1 second to avoid unnecessary CPU usage
+        
+        # Log the count for this minute
+        minute_counts[current_minute] = len(ids_this_minute)
+
+def display_minute_counts():
+    """Display the stored minute-wise counts in a separate thread to keep the GUI responsive."""
+    def show_counts():
+        if not minute_counts:
+            messagebox.showinfo("Minute Counts", "No data recorded yet.")
+            return
+        
+        counts_str = "\n".join([f"{minute}: {count} people" for minute, count in sorted(minute_counts.items())])
+        messagebox.showinfo("Minute Counts", f"Minute-Wise People Counts:\n\n{counts_str}")
+
+    # Run the function in a separate thread
+    threading.Thread(target=show_counts, daemon=True).start()
+
+"""
 # Start the hourly tracking in a separate thread
-hourly_thread = threading.Thread(target= track_hourly_counts, daemon=True)
+hourly_thread = threading.Thread(target= track_minute_counts, daemon=True)
 hourly_thread.start()
+"""
+
 
 def stop_detection():
     global stop_thread, tracked_ids, current_ids
@@ -250,7 +291,7 @@ btn_stop = tk.Button(button_frame, text="Stop Detection", command=stop_detection
 btn_stop.pack(side=tk.LEFT, padx=10)
 
 # Display button for hourly counts
-btn_display_counts = tk.Button(button_frame, text="Display Analysis", command=display_hourly_counts)
+btn_display_counts = tk.Button(button_frame, text="Display Analysis", command=track_minute_counts)
 btn_display_counts.pack(side=tk.LEFT, padx=10)
 
 # Run the main Tkinter loop
