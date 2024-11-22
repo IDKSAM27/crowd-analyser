@@ -178,6 +178,9 @@ def detect_people():
     except Exception as e:
         print(f"Error in detection loop: {e}")
 
+hourly_counts = {}
+tracking_active = True
+
 def track_hourly_counts():
     #Track the hourly counts in a background thread.
     global hourly_counts, tracked_ids, tracking_active
