@@ -185,15 +185,16 @@ def track_hourly_counts():
     #Track the hourly counts in a background thread.
     global hourly_counts, tracked_ids, tracking_active
     while tracking_active:
-            # Get the current hour in HH:MM format
-            current_hour = time.strftime("%d-%m-%Y %H:00")
+            # (if hourly_counts) Get the current hour in "DD-MM-YYYY HH:MM" format
+            # Get the current minute in "DD-MM-YYYY HH:MM" format
+            current_hour = time.strftime("%d-%m-%Y %HH:MM")
 
             # Add/update the count of unique tracked IDs for this hour
             hourly_counts[current_hour] = len(tracked_ids)
 
             #Sleep until the next hour
             current_time = time.time()
-            next_hour = (int(current_time // 3600) + 1) * 3600
+            next_hour = (int(current_time // 60) + 1) * 60      # 3600 if you want hourly, 60 if you want every minute data 
             time.sleep(max(0, next_hour - current_time))
 
 def display_hourly_counts():
@@ -249,7 +250,7 @@ btn_stop = tk.Button(button_frame, text="Stop Detection", command=stop_detection
 btn_stop.pack(side=tk.LEFT, padx=10)
 
 # Display button for hourly counts
-btn_display_counts = tk.Button(button_frame, text="Display Hourly Counts", command=display_hourly_counts)
+btn_display_counts = tk.Button(button_frame, text="Display Analysis", command=display_hourly_counts)
 btn_display_counts.pack(side=tk.LEFT, padx=10)
 
 # Run the main Tkinter loop
