@@ -184,8 +184,6 @@ def detect_people():
         print(f"Error in detection loop: {e}")
 
 
-
-
 # Global dictionary to store minute counts
 minute_counts = {}
 tracking_active = True
@@ -194,16 +192,21 @@ def track_minute_counts():
     #Track the minute counts in a background thread.
     global minute_counts, tracked_ids, tracking_active
     while tracking_active:
-        # Get the current hour in HH:MM format
+        # Initialize the current minute tracking
         current_minute = time.strftime("%Y-%m-%d %H:%M")
-        
-        # Add/update the count of unique tracked IDs for this hour
-        minute_counts[current_minute] = len(tracked_ids)
-        
-        # Sleep until the next hour
-        current_time = time.time()
-        next_minute = (int(current_time // 60) + 1) * 60
-        time.sleep(max(0, next_minute - current_time))
+        current_minute_ids = set()
+
+        # Sleep for a second to synchronize with the actual minute
+        time.sleep(1)
+
+        while time.strftime("%Y-%m-%d %H:%M") == current_minute and tracking_active:
+            # Add IDs currently in frame to the minute's ID set
+            current_minute_ids.update(current_ids)
+            time.sleep(0.5)  # Small delay to avoid too much CPU usage
+
+        # After the minute is over, save the count and reset
+        minute_counts[current_minute] = len(current_minute_ids)
+        print(f"{current_minute}: {minute_counts[current_minute]} people detected.")  # Debug output
 
 def display_minute_counts():
     #Display the stored minute counts.
@@ -217,7 +220,6 @@ def display_minute_counts():
 # Start the minute tracking in a separate thread
 minute_thread = threading.Thread(target=track_minute_counts, daemon=True)
 minute_thread.start()
-
 
 
 def stop_detection():
@@ -265,7 +267,6 @@ btn_display_counts = tk.Button(button_frame, text="Display Minute Counts", comma
 btn_display_counts.pack(side=tk.LEFT, padx=10)
 
 
-
 # Run the main Tkinter loop
 root.mainloop()
-#some slight improvements please check it, make any changes if necessary
+# Per minute count added, which could also be changed to per hour count(if needed)
