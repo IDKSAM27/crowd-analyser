@@ -4,7 +4,7 @@
 
 #you can delete this file if you want.
 
-#best way to understand the base of this project.
+#going through this code is the best way to understand the base of this project.
 
 #==================================================================================================
 
