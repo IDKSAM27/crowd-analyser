@@ -1,1 +1,0 @@
-from analysis.minutecount import startanalysis

@@ -9,7 +9,7 @@ import time
 from playsound import playsound
 from sort import Sort
 import numpy as np
-import analysis # SELF MADE PYTHON PACKAGE
+
 
 # Initialize the main application window
 root = tk.Tk()
@@ -185,7 +185,7 @@ def detect_people():
 
 
 
-"""
+
 # Global dictionary to store minute counts
 minute_counts = {}
 tracking_active = True
@@ -217,10 +217,8 @@ def display_minute_counts():
 # Start the minute tracking in a separate thread
 minute_thread = threading.Thread(target=track_minute_counts, daemon=True)
 minute_thread.start()
-"""
 
 
-analysis.startanalysis()
 
 def stop_detection():
     global stop_thread, tracked_ids, current_ids
@@ -261,11 +259,11 @@ btn_webcam.pack(side=tk.LEFT, padx=10)
 btn_stop = tk.Button(button_frame, text="Stop Detection", command=stop_detection)
 btn_stop.pack(side=tk.LEFT, padx=10)
 
-"""
+
 # Add a display button to the GUI
 btn_display_counts = tk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
 btn_display_counts.pack(side=tk.LEFT, padx=10)
-"""
+
 
 
 # Run the main Tkinter loop
