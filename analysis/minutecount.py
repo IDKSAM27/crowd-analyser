@@ -1,12 +1,15 @@
 import time 
 from tkinter import messagebox
 import threading
+import tkinter as tk
+
+tracking_active = True
 
 def startanalysis():
 
     # Global dictionary to store minute counts    
     minute_counts = {}
-    tracking_active = True
+    # tracking_active = True
 
     def track_minute_counts():
         """Track the minute counts in a background thread."""
@@ -36,3 +39,9 @@ def startanalysis():
     minute_thread = threading.Thread(target=track_minute_counts, daemon=True)
     minute_thread.start()
 
+    def startgui():
+       root = tk.Tk()
+       button_frame = tk.Frame(root)
+       # Add a display button to the GUI
+       btn_display_counts = tk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
+       btn_display_counts.pack(side=tk.LEFT, padx=10)
