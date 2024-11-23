@@ -159,6 +159,10 @@ def detect_people():
                 lbl_total_count.config(text=f"Total People Appeared: {len(tracked_ids)}")
                 lbl_current_count.config(text=f"Current People in Frame: {len(current_ids)}")
 
+                # Play the alarm if more than 10 unique people are detected
+                if len(tracked_ids) > 60:
+                    threading.Thread(target=play_alarm).start()
+
                 # Display the frame
                 frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 img = Image.fromarray(frame_rgb)
@@ -178,12 +182,12 @@ def detect_people():
     except Exception as e:
         print(f"Error in detection loop: {e}")
 
-# Global dictionary to store hourly counts
+# Global dictionary to store minute counts
 minute_counts = {}
 tracking_active = True
 
 def track_minute_counts():
-    """Track the hourly counts in a background thread."""
+    """Track the minute counts in a background thread."""
     global minute_counts, tracked_ids, tracking_active
     while tracking_active:
         # Get the current hour in HH:MM format
@@ -198,7 +202,7 @@ def track_minute_counts():
         time.sleep(max(0, next_minute - current_time))
 
 def display_minute_counts():
-    """Display the stored hourly counts."""
+    """Display the stored minute counts."""
     if not minute_counts:
         messagebox.showinfo("Minute Counts", "No data recorded yet.")
         return
