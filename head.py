@@ -219,10 +219,12 @@ def display_minute_counts():
     counts_str = "\n".join([f"{minute}: {count} people" for minute, count in sorted(minute_counts.items())])
     messagebox.showinfo("Minute Counts", f"Minute People Counts:\n\n{counts_str}")
 """
+
+
 def display_minute_counts():
-    """
-    Display the stored minute counts as a text summary and graph in a new window.
-    """
+    
+    #Display the stored minute counts as a text summary and graph in a new window.
+    
     if not minute_counts:
         messagebox.showinfo("Minute Counts", "No data recorded yet.")
         return
@@ -287,4 +289,4 @@ btn_display_counts.pack(side=tk.LEFT, padx=10)
 
 # Run the main Tkinter loop
 root.mainloop()
-# Per minute count added, which could also be changed to per hour count(if needed)
+# Per minute count added, which cd also be changed to per hour count(if needed)
