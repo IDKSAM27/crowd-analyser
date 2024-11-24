@@ -10,7 +10,7 @@ from playsound import playsound
 from sort import Sort
 import numpy as np
 
-
+from graph_display import show_graph
 
 # Initialize the main application window
 root = tk.Tk()
@@ -209,6 +209,7 @@ def track_minute_counts():
         minute_counts[current_minute] = len(current_minute_ids)
         print(f"{current_minute}: {minute_counts[current_minute]} people detected.")  # Debug output
 
+"""
 def display_minute_counts():
     #Display the stored minute counts.
     if not minute_counts:
@@ -217,6 +218,22 @@ def display_minute_counts():
     
     counts_str = "\n".join([f"{minute}: {count} people" for minute, count in sorted(minute_counts.items())])
     messagebox.showinfo("Minute Counts", f"Minute People Counts:\n\n{counts_str}")
+"""
+def display_minute_counts():
+    """
+    Display the stored minute counts as a graph in a new window.
+    """
+    if not minute_counts:
+        messagebox.showinfo("Minute Counts", "No data recorded yet.")
+        return
+    
+    # Prompt the user to select the graph type
+    response = messagebox.askquestion("Graph Type", "Would you like a line graph? (Select 'No' for bar graph)")
+    graph_type = "line" if response == "yes" else "bar"
+    
+    # Display the graph
+    show_graph(minute_counts, graph_type=graph_type)
+
 
 # Start the minute tracking in a separate thread
 minute_thread = threading.Thread(target=track_minute_counts, daemon=True)
