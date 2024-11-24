@@ -221,17 +221,17 @@ def display_minute_counts():
 """
 def display_minute_counts():
     """
-    Display the stored minute counts as a graph in a new window.
+    Display the stored minute counts as a text summary and graph in a new window.
     """
     if not minute_counts:
         messagebox.showinfo("Minute Counts", "No data recorded yet.")
         return
-    
+
     # Prompt the user to select the graph type
     response = messagebox.askquestion("Graph Type", "Would you like a line graph? (Select 'No' for bar graph)")
     graph_type = "line" if response == "yes" else "bar"
     
-    # Display the graph
+    # Display the graph and the summary
     show_graph(minute_counts, graph_type=graph_type)
 
 
