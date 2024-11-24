@@ -11,6 +11,7 @@ from sort import Sort
 import numpy as np
 
 
+
 # Initialize the main application window
 root = tk.Tk()
 root.title("Head Detection with YOLOv5 and SORT Tracking")
