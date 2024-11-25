@@ -151,8 +151,8 @@ def detect_people():
                     head_y2 = y1 + head_height
 
                     # Draw a bounding box for the head region
-                    cv2.rectangle(frame, (x1, y1), (x2, head_y2), (0, 255, 0), 2)  # Green rectangle
-                    cv2.putText(frame, f"ID {track_id}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+                    cv2.rectangle(frame, (x1, y1), (x2, head_y2), (0, 165, 255), 2)  # Green rectangle
+                    cv2.putText(frame, f"ID {track_id}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
                 # Update tracked IDs
                 tracked_ids.update(current_ids)
@@ -208,17 +208,6 @@ def track_minute_counts():
         # After the minute is over, save the count and reset
         minute_counts[current_minute] = len(current_minute_ids)
         print(f"{current_minute}: {minute_counts[current_minute]} people detected.")  # Debug output
-
-"""
-def display_minute_counts():
-    #Display the stored minute counts.
-    if not minute_counts:
-        messagebox.showinfo("Minute Counts", "No data recorded yet.")
-        return
-    
-    counts_str = "\n".join([f"{minute}: {count} people" for minute, count in sorted(minute_counts.items())])
-    messagebox.showinfo("Minute Counts", f"Minute People Counts:\n\n{counts_str}")
-"""
 
 
 def display_minute_counts():
