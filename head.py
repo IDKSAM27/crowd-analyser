@@ -162,7 +162,7 @@ def detect_people():
                 lbl_current_count.config(text=f"Current People in Frame: {len(current_ids)}")
 
                 # Play the alarm if more than 10 unique people are detected
-                if len(tracked_ids) > 60:
+                if len(tracked_ids) > 250:
                     threading.Thread(target=play_alarm).start()
 
                 # Display the frame
