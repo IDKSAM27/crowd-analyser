@@ -53,7 +53,7 @@ def play_alarm():
     global alarm_playing
     if not alarm_playing:  # Prevent multiple alarms playing simultaneously
         alarm_playing = True
-        playsound(r"alarm.mp3")
+        playsound("alarm.mp3")
         alarm_playing = False
 
 def detect_crowd():
