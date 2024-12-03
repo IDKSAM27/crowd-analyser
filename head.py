@@ -104,7 +104,7 @@ def play_alarm():
 #remove try_except(if needed) to understand the rectangle box issue
 def detect_people():
     try:
-        global cap, stop_thread, tracked_ids, current_ids
+        global cap, stop_thread, tracked_ids, current_ids, roi_coords
         print("Starting people detection...")
 
         frame_count = 0
@@ -114,16 +114,20 @@ def detect_people():
             ret, frame = cap.read()
             if not ret:
                 print("End of video reached or error reading the video!")
-                # time.sleep(0.1)
                 break
 
             frame_count += 1
             if frame_count % process_interval != 0:
                 continue
 
-
             try:
                 frame = cv2.resize(frame, (640, 480))
+
+                # Crop the frame to the selected ROI, if any
+                if roi_coords:
+                    x1, y1, x2, y2 = roi_coords
+                    frame = frame[y1:y2, x1:x2]
+
                 results = model(frame)
 
                 if len(results.xyxy) == 0 or results.xyxy[0].shape[1] < 6:
@@ -146,12 +150,17 @@ def detect_people():
                     track_id = int(track_id)
                     current_ids.add(track_id)
 
-                    # Calculate the head region (top 25% of the bounding box)
-                    head_height = int(0.25 * (y2 - y1))  # Adjust for more/less head region
-                    head_y2 = y1 + head_height
+                    # Adjust bounding boxes for cropped frames
+                    if roi_coords:
+                        x1 += roi_coords[0]
+                        x2 += roi_coords[0]
+                        y1 += roi_coords[1]
+                        y2 += roi_coords[1]
 
                     # Draw a bounding box for the head region
-                    cv2.rectangle(frame, (x1, y1), (x2, head_y2), (0, 165, 255), 2)  # Green rectangle
+                    head_height = int(0.25 * (y2 - y1))
+                    head_y2 = y1 + head_height
+                    cv2.rectangle(frame, (x1, y1), (x2, head_y2), (0, 165, 255), 2)
                     cv2.putText(frame, f"ID {track_id}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
                 # Update tracked IDs
@@ -231,6 +240,49 @@ minute_thread = threading.Thread(target=track_minute_counts, daemon=True)
 minute_thread.start()
 
 
+
+
+roi_coords = None  # Global variable to store ROI coordinates
+
+def select_roi():
+    global cap, roi_coords
+    if cap is None or not cap.isOpened():
+        messagebox.showerror("Error", "Video or webcam is not active.")
+        return
+
+    # Read a single frame to select ROI
+    ret, frame = cap.read()
+    if not ret:
+        messagebox.showerror("Error", "Unable to capture frame for ROI selection.")
+        return
+
+    # Resize the frame for consistent display
+    frame = cv2.resize(frame, (640, 480))
+
+    # OpenCV ROI selection
+    roi = cv2.selectROI("Select ROI", frame, showCrosshair=True, fromCenter=False)
+    cv2.destroyWindow("Select ROI")
+
+    if roi == (0, 0, 0, 0):
+        roi_coords = None
+        messagebox.showinfo("Info", "ROI selection cleared.")
+    else:
+        x, y, w, h = roi
+        roi_coords = (x, y, x + w, y + h)
+        messagebox.showinfo("Info", f"ROI selected: {roi_coords}")
+
+
+
+
+# Function for clearing the ROI setting or choice
+def set_roi(coords):
+    global roi_coords
+    roi_coords = coords
+    messagebox.showinfo("Info", "ROI cleared and reset to full frame.")
+
+
+
+
 def stop_detection():
     global stop_thread, tracked_ids, current_ids
     stop_thread = True
@@ -275,7 +327,16 @@ btn_stop.pack(side=tk.LEFT, padx=10)
 btn_display_counts = tk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
 btn_display_counts.pack(side=tk.LEFT, padx=10)
 
+# ROI (Region of Interest) Selection GUI
+btn_select_roi = tk.Button(button_frame, text="Select ROI", command=select_roi)
+btn_select_roi.pack(side=tk.LEFT, padx=10)
+
+# Clear the ROI
+btn_clear_roi = tk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
+btn_clear_roi.pack(side=tk.LEFT, padx=10)
+
+
 
 # Run the main Tkinter loop
 root.mainloop()
-# Per minute count added, which cd also be changed to per hour count(if needed)
+# Per minute count added, which could also be changed to per hour count(if needed)
