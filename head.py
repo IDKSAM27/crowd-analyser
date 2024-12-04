@@ -102,6 +102,8 @@ def play_alarm():
 
 #starts to detect heads of people in every 5th frame of the vid
 #remove try_except(if needed) to understand the rectangle box issue
+
+'''
 def detect_people():
     try:
         global cap, stop_thread, tracked_ids, current_ids, roi_coords
@@ -192,6 +194,113 @@ def detect_people():
 
     except Exception as e:
         print(f"Error in detection loop: {e}")
+'''
+
+
+def detect_people():
+    try:
+        global cap, stop_thread, tracked_ids, current_ids, roi_coords
+        print("Starting people detection...")
+
+        frame_count = 0
+        process_interval = 5  # Process every 5 frames
+
+        while cap.isOpened() and not stop_thread:
+            ret, frame = cap.read()
+            if not ret:
+                print("End of video reached or error reading the video!")
+                break
+
+            frame_count += 1
+            if frame_count % process_interval != 0:
+                continue
+
+            try:
+                frame = cv2.resize(frame, (640, 480))
+
+                # Crop the frame to the selected ROI, if any
+                if roi_coords:
+                    x1, y1, x2, y2 = roi_coords
+                    frame = frame[y1:y2, x1:x2]
+
+                results = model(frame)
+
+                if len(results.xyxy) == 0 or results.xyxy[0].shape[1] < 6:
+                    print("Warning: Model output is invalid. Skipping frame.")
+                    continue
+
+                # Extract bounding box results for 'person' class
+                people = results.xyxy[0].cpu().numpy()
+                people = [p for p in people if int(p[5]) == 0]  # Class 0 corresponds to 'person'
+
+                # Prepare detections for SORT tracker
+                detections = []
+                for x1, y1, x2, y2, conf, _ in people:
+                    # Adjust coordinates for cropped ROI
+                    if roi_coords:
+                        x1 += roi_coords[0]
+                        x2 += roi_coords[0]
+                        y1 += roi_coords[1]
+                        y2 += roi_coords[1]
+                    detections.append([x1, y1, x2, y2, conf])
+
+                # Update the SORT tracker
+                tracked_objects = tracker.update(np.array(detections))
+
+                current_ids = set()
+                for x1, y1, x2, y2, track_id in tracked_objects:
+                    x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
+                    track_id = int(track_id)
+                    current_ids.add(track_id)
+
+                    # Adjust bounding boxes back for cropped frames
+                    if roi_coords:
+                        x1 -= roi_coords[0]
+                        x2 -= roi_coords[0]
+                        y1 -= roi_coords[1]
+                        y2 -= roi_coords[1]
+
+                    # Draw a bounding box for the head region
+                    head_height = int(0.25 * (y2 - y1))
+                    head_y2 = y1 + head_height
+                    cv2.rectangle(frame, (x1, y1), (x2, head_y2), (0, 165, 255), 2)
+                    cv2.putText(frame, f"ID {track_id}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
+
+                    # Track the current frame IDs
+                    current_ids.add(track_id)
+                    tracked_ids.add(track_id)
+
+                # Update tracked IDs # above two lines handles the updating of the current_ids and tracked_ids
+                # tracked_ids.update(current_ids)
+
+                # Update GUI labels
+                lbl_total_count.config(text=f"Total People Appeared: {len(tracked_ids)}")
+                lbl_current_count.config(text=f"Current People in Frame: {len(current_ids)}")
+
+                # Play the alarm if more than 10 unique people are detected
+                if len(tracked_ids) > 250:
+                    threading.Thread(target=play_alarm).start()
+
+                # Display the frame
+                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                img = Image.fromarray(frame_rgb)
+                imgtk = ImageTk.PhotoImage(image=img)
+                lbl_video.imgtk = imgtk
+                lbl_video.configure(image=imgtk)
+
+                root.update()
+                time.sleep(0.03)
+            except Exception as inner_e:
+                print(f"Error processing frame: {inner_e}")
+
+        cap.release()
+        cv2.destroyAllWindows()
+        print("Video capture released.")
+
+    except Exception as e:
+        print(f"Error in detection loop: {e}")
+
 
 
 # Global dictionary to store minute counts
