@@ -9,7 +9,7 @@ import time
 from playsound import playsound
 from sort import Sort
 import numpy as np
-
+# The graph_display
 from graph_display import show_graph
 
 # Initialize the main application window
@@ -18,7 +18,7 @@ root.title("Head Detection with YOLOv5 and SORT Tracking")
 root.geometry("800x650")
 
 # Make the window resizable only in height
-root.resizable(width=False, height=True)
+root.resizable(width=False, height=False)
 
 # Load the YOLOv5 model
 def load_model():
@@ -33,7 +33,7 @@ def load_model():
 
 threading.Thread(target=load_model).start()
 
-# Initialize SORT tracker
+# Initialize SORT tracker algorithm
 tracker = Sort(max_age=20, min_hits=3, iou_threshold=0.3)
 
 # Global variables for video capture and stopping the thread
@@ -43,6 +43,7 @@ alarm_playing = False
 tracked_ids = set()  # Keep track of unique IDs ever encountered
 current_ids = set()  # Keep track of IDs currently in the frame
 
+# Launches File Explorer and allow us to choose videos
 def open_video():
     global cap, stop_thread
     stop_thread = False
@@ -62,6 +63,7 @@ def open_video():
     else:
         print("No video file selected.")  # Debugging output
 
+# Launches webcam
 def start_webcam():
     global cap, stop_thread
     stop_thread = True  # Stop any previous detection thread
@@ -82,7 +84,7 @@ def start_webcam():
 #Alarm will only sound once every 10 seconds
 last_alarm_time = 0
 alarm_interval = 10  
-
+# Function for playing an alarm if some condition(in our case >250 people)
 def play_alarm():
     global alarm_playing, last_alarm_time
     current_time = time.time()
@@ -108,7 +110,8 @@ def detect_people():
         print("Starting people detection...")
 
         frame_count = 0
-        process_interval = 5  # Process every 5 frames
+        # Process every 5 frames
+        process_interval = 5  
 
         while cap.isOpened() and not stop_thread:
             ret, frame = cap.read()
@@ -212,6 +215,7 @@ def detect_people():
 minute_counts = {}
 tracking_active = True
 
+# Tracks or count per minute count and shows in the graph of the same
 def track_minute_counts():
     #Track the minute counts in a background thread.
     global minute_counts, tracked_ids, tracking_active
@@ -232,7 +236,7 @@ def track_minute_counts():
         minute_counts[current_minute] = len(current_minute_ids)
         print(f"{current_minute}: {minute_counts[current_minute]} people detected.")  # Debug output
 
-
+# Function which displays per minute counts also redirects to graph_display.py
 def display_minute_counts():
     
     #Display the stored minute counts as a text summary and graph in a new window.
@@ -255,7 +259,7 @@ minute_thread.start()
 
 
 
-
+# Allow us to choose a Region of Interest, in short updates the coordinates of the video and sends it to SORT for tracking
 roi_coords = None  # Global variable to store ROI coordinates
 
 def select_roi():
@@ -296,7 +300,7 @@ def set_roi(coords):
 
 
 
-
+# Stops or resets all the corresponding variables
 def stop_detection():
     global stop_thread, tracked_ids, current_ids
     stop_thread = True
