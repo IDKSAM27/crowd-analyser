@@ -26,7 +26,9 @@ to load videos or start webcam-based detection, displays results in real-time, a
 
     * Usage of Bar and Line graph to visually represent the head count of the crowd per minute (can also implement per hour if needed).
  
-    * The program counts the total number of people appeared in a minute and save the count in a dictionary, then the count is reset, and the next minute data is captured. 
+    * The program counts the total number of people appeared in a minute and save the count in a dictionary, then the count is reset, and the next minute data is captured.
+ 
+    * ROI (Region of Interest), where you could select a particular region in the video footage and the algo will focus on only the specified region.
     
 
 ## Documentation(detailed)
