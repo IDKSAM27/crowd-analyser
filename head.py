@@ -353,4 +353,4 @@ btn_clear_roi.pack(side=tk.LEFT, padx=10)
 
 # Run the main Tkinter loop
 root.mainloop()
-# Per minute count added, which could also be changed to per hour count(if needed)
+# ROI(Region of Interest), solved the ROI bugs and made the ROI selection count more accurate
