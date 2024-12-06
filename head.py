@@ -11,6 +11,8 @@ from sort import Sort
 import numpy as np
 # The graph_display
 from graph_display import show_graph
+# Whatsapp message function access
+from whatsapp import sent_to_whatsapp
 
 # Initialize the main application window
 root = tk.Tk()
@@ -235,6 +237,8 @@ def track_minute_counts():
         # After the minute is over, save the count and reset
         minute_counts[current_minute] = len(current_minute_ids)
         print(f"{current_minute}: {minute_counts[current_minute]} people detected.")  # Debug output
+
+        
 
 # Function which displays per minute counts also redirects to graph_display.py
 def display_minute_counts():
