@@ -12,7 +12,7 @@ import numpy as np
 # The graph_display
 from graph_display import show_graph
 # Whatsapp message function access
-from whatsapp import sent_to_whatsapp
+# from whatsapp import sent_to_whatsapp
 
 # Initialize the main application window
 root = tk.Tk()
@@ -356,7 +356,6 @@ btn_select_roi.pack(side=tk.LEFT, padx=10)
 # Clear the ROI
 btn_clear_roi = tk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
 btn_clear_roi.pack(side=tk.LEFT, padx=10)
-
 
 
 # Run the main Tkinter loop
