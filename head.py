@@ -11,8 +11,8 @@ from sort import Sort
 import numpy as np
 # The graph_display
 from graph_display import show_graph
-# Whatsapp message function access
-# from whatsapp import sent_to_whatsapp
+# Message function access
+# from msg import sent_to_client
 
 # Initialize the main application window
 root = tk.Tk()
