@@ -134,3 +134,13 @@ Which One to Use?
     is more robust and portable.
     -If you are certain that alarm.mp3 will always be in the same directory as the working directory when the script is executed, the static path
     is simpler but might break if the script is executed from a different directory.
+
+========================================================================================================================================================
+
+Means of message/text/notification/warning over meaningful variables like overcrowding has to decided.
+NOTE: THIS COULD BE IMPLEMENTED, NOT COMPULSORY THOUGH, I KNOW GOUDAR SIR WOULD "EED EN RI, SANNU HUDGURU MADTARU", BUT OPERATIONAL WISE OR PRACTICALLY
+        A MODE OF MESSAGE IS QUITE USEFULL.
+
+Tried Twilio API and Whatsapp Business API, but the APIs are not free, there is some cost connected with the no. of messages sent.
+
+Trying to find alternate ways to implement the same.
