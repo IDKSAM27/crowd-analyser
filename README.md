@@ -34,7 +34,7 @@ to load videos or start webcam-based detection, displays results in real-time, a
 ## Documentation(detailed)
 
 [Documentation](https://github.com/IDKSAM27/Crowd-analyser/blob/main/Documentation.txt): read this file for more detailed instructions on installation and use.
-(update: I would prefer you to read this first as it has more deep info!)
+(P.S., I would prefer you to read this first as it has more deep info!)
 
 ## Requirements
 ### Python Version
@@ -52,6 +52,7 @@ Install the required libraries using the following command:
 * `numpy`
 * `tkinter`
 * `sort` (Include the `sort.py` file in the project directory)
+* `matplotlib`
 
 
 ## Usage
@@ -75,6 +76,8 @@ Install the required libraries using the following command:
 * **Open Video:** Load a video file and start detection.
 * **Start Webcam:** Start real-time head detection using the Webcam
 * **Stop Detection:** Stop video/webcam detection.
+* **Display Minute Counts:** Displays line and bar graph of the occured data.
+* **Select and Clear ROI:** Enable user to select and clear Region of Interest.
 
 ### 5. Detection Thresholds:
 * **Track heads** of people in the video or live feed.
@@ -89,6 +92,7 @@ Install the required libraries using the following command:
 ```graphql
 Crowd_analysis/
 ├── head.py      # Main application file
+├── graph_display.py       # Display graphs
 ├── alarm.mp3              # Alarm sound file (place in the same directory)
 ├── sort.py                # SORT tracking algorithm file
 ├── requirements.txt       # List of dependencies
@@ -103,6 +107,7 @@ Crowd_analysis/
 * The `sort.py` file is required for the tracking functionality. Ensure it's included in the same directory.
 * The application processes every 5th frame of the video by default to reduce CPU load. You can modify the `process_interval` in the code as needed.
 * If the alarm is not playing, verify the presence and path of `alarm.mp3`.
+* Always make sure to create 'virtual environment' before installing the requirements or libraries.
 
 
 ## Future Improvements
