@@ -113,7 +113,7 @@ def detect_people():
 
         frame_count = 0
         # Process every 5 frames
-        process_interval = 5  
+        process_interval = 10  
 
         while cap.isOpened() and not stop_thread:
             ret, frame = cap.read()

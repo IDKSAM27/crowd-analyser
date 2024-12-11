@@ -150,4 +150,4 @@ Trying to find alternate ways to implement the same.
 
 Another update we can make is the analysis procedure:
     Right now we use tkinter and matplotlib, Rather than using a niche library like matplotlib which provides very basic graph qualities,
-    We can use 'statsmodel' for graphs and other analysis modes.ē
+    We can use 'statsmodel' for graphs and other analysis modes. Or use both for better usage of the libraries.
