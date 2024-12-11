@@ -144,3 +144,10 @@ NOTE: THIS COULD BE IMPLEMENTED, NOT COMPULSORY THOUGH, I KNOW GOUDAR SIR WOULD 
 Tried Twilio API and Whatsapp Business API, but the APIs are not free, there is some cost connected with the no. of messages sent.
 
 Trying to find alternate ways to implement the same.
+
+==================================================================================================================================================================
+
+
+Another update we can make is the analysis procedure:
+    Right now we use tkinter and matplotlib, Rather than using a niche library like matplotlib which provides very basic graph qualities,
+    We can use 'statsmodel' for graphs and other analysis modes.ē
