@@ -361,3 +361,5 @@ btn_clear_roi.pack(side=tk.LEFT, padx=10)
 # Run the main Tkinter loop
 root.mainloop()
 # ROI(Region of Interest), solved the ROI bugs and made the ROI selection count more accurate
+# TODO: make a configuration file or something similar to control parameters like threshold, frame interval, and alarm settings.
+# TODO: create a json file and integrate it into the head.py to implement the above todo.
