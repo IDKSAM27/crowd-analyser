@@ -60,7 +60,7 @@ Install the required libraries using the following command:
 ### 1. Clone the repository:
 
 ```bash
-  git clone https://github.com/IDKSAM27/Crowd-analyser
+  git clone https://github.com/IDKSAM27/crowd-analyser
 ```
 
 ### 2. Place Alarm File:
