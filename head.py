@@ -113,7 +113,7 @@ def detect_people():
 
         frame_count = 0
         # Process every 5 frames
-        process_interval = 10  
+        process_interval = 5 
 
         while cap.isOpened() and not stop_thread:
             ret, frame = cap.read()
@@ -317,6 +317,8 @@ def stop_detection():
     tracked_ids.clear()  # Clear tracked IDs
     current_ids.clear()  # Clear current IDs
     print("Detection stopped.")  # Debugging output
+
+
 
 # Creating GUI elements
 lbl_video = tk.Label(root)
