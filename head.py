@@ -13,8 +13,8 @@ import numpy as np
 from graph_display import show_graph
 # Message function access
 # from msg import sent_to_client
+# Load and open window for configuration of some imp variables
 from config import load_config, open_config_editor
-
 
 # Initialize the main application window
 root = tk.Tk()
@@ -102,6 +102,7 @@ def play_alarm():
         last_alarm_time = current_time
         try:
             # Construct the path dynamically
+            # Look at Documentation.txt for more information on dynamic path
             script_dir = os.path.dirname(os.path.abspath(__file__))
             alarm_path = os.path.join(script_dir, "alarm.mp3")
             playsound(alarm_path)
@@ -363,6 +364,3 @@ btn_edit_config = tk.Button(root, text="Edit Config", command=open_config_editor
 
 # Run the main Tkinter loop
 root.mainloop()
-# ROI(Region of Interest), solved the ROI bugs and made the ROI selection count more accurate
-# TODO: make a configuration file or something similar to control parameters like threshold, frame interval, and alarm settings.
-# TODO: create a json file and integrate it into the head.py to implement the above todo.
