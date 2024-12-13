@@ -1,0 +1,9 @@
+{
+    "alarm_interval": 10,
+    "alarm_threshold": 250,
+    "process_interval": 5,
+    "iou_threshold": 0.3,
+    "max_age": 20,
+    "min_hits": 3,
+    "roi_default": [0, 0, 640, 480]
+}
