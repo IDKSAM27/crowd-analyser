@@ -13,6 +13,45 @@ import numpy as np
 from graph_display import show_graph
 # Message function access
 # from msg import sent_to_client
+import json
+
+
+
+# Load configuration from a file
+def load_config(file_path = "config.json"):
+    try:
+        with open(file_path, "r") as f:
+            config = json.load(f)
+        print("Configuration loaded successfully.")
+        return config
+    except Exception as e:
+        print(f"Error loading configuration: {e}")
+        return None
+    
+
+config = load_config()
+if config is None:
+    # Defaults in case loading fails
+    config = {
+        "process_interval": 10,
+        "iou_threshold": 0.3,
+        "max_age": 20,
+        "min_hit": 3,
+        "alarm_threshold": 250,
+        "alarm_interval": 10,
+        "roi_default": [0, 0, 640, 480]
+    }
+
+
+
+def reload_config():
+    global config
+    new_config = load_config()
+    if new_config:
+        config.update(new_config)
+        messagebox.showinfo("Configuration Reloaded", "Configuration parameters updated successfully.")
+
+
 
 # Initialize the main application window
 root = tk.Tk()
@@ -36,7 +75,7 @@ def load_model():
 threading.Thread(target=load_model).start()
 
 # Initialize SORT tracker algorithm
-tracker = Sort(max_age=20, min_hits=3, iou_threshold=0.3)
+tracker = Sort(max_age=config["max_age"], min_hits=config["min_hits"], iou_threshold=config["iou_threshold"])
 
 # Global variables for video capture and stopping the thread
 cap = None
@@ -85,7 +124,7 @@ def start_webcam():
 
 #Alarm will only sound once every 10 seconds
 last_alarm_time = 0
-alarm_interval = 10  
+alarm_interval = config["alarm_interval"]  
 # Function for playing an alarm if some condition(in our case >250 people)
 def play_alarm():
     global alarm_playing, last_alarm_time
@@ -113,7 +152,7 @@ def detect_people():
 
         frame_count = 0
         # Process every 5 frames
-        process_interval = 5 
+        process_interval = config["process_interval"]
 
         while cap.isOpened() and not stop_thread:
             ret, frame = cap.read()
@@ -264,7 +303,7 @@ minute_thread.start()
 
 
 # Allow us to choose a Region of Interest, in short updates the coordinates of the video and sends it to SORT for tracking
-roi_coords = None  # Global variable to store ROI coordinates
+roi_coords = config["roi_default"]  # Global variable to store ROI coordinates
 
 def select_roi():
     global cap, roi_coords
@@ -358,6 +397,10 @@ btn_select_roi.pack(side=tk.LEFT, padx=10)
 # Clear the ROI
 btn_clear_roi = tk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
 btn_clear_roi.pack(side=tk.LEFT, padx=10)
+
+# Reload Configuration
+btn_reload_config = tk.Button(button_frame, text="Reload Config", command=reload_config)
+btn_reload_config.pack(side=tk.LEFT, padx=10)
 
 
 # Run the main Tkinter loop
