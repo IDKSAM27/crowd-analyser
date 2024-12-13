@@ -3,6 +3,6 @@
     "iou_threshold": 0.3,
     "max_age": 20,
     "min_hits": 3,
-    "alarm_threshold": 250,
+    "alarm_threshold": 60,
     "alarm_interval": 10
 }

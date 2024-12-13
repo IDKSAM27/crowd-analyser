@@ -38,7 +38,7 @@ def open_config_editor(root, config):
     # Open a GUI window to edit the configuration
     editor = tk.Toplevel(root)
     editor.title("Edit Configuration")
-    editor.geometry("400x300")
+    editor.geometry("280x250")
 
     # Create input fields for each configuration parameter
     def add_field(row, label, key, default):

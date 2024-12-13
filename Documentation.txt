@@ -151,3 +151,27 @@ Trying to find alternate ways to implement the same.
 Another update we can make is the analysis procedure:
     Right now we use tkinter and matplotlib, Rather than using a niche library like matplotlib which provides very basic graph qualities,
     We can use 'statsmodel' for graphs and other analysis modes. Or use both for better usage of the libraries.
+
+
+
+===================================================================================================================================================================
+
+IoU:
+
+The Intersection over Union (IoU) threshold is a critical parameter in object detection tasks. It determines the minimum required overlap between a predicted 
+bounding box and the ground truth bounding box for the prediction to be considered a true positive. Mathematically, IoU is defined as the ratio of the area of 
+intersection to the area of union between the predicted and ground truth bounding boxes.
+
+Setting an appropriate IoU threshold is essential for balancing precision and recall in object detection models:
+
+    Higher IoU Thresholds: Requiring a greater overlap (e.g., IoU > 0.7) means that only predictions closely matching the ground truth are counted as true positives. 
+    This increases precision by reducing false positives but may decrease recall due to more false negatives. 
+
+    Lower IoU Thresholds: Allowing a lesser overlap (e.g., IoU > 0.5) results in more predictions being considered true positives, which can increase recall by 
+    capturing more actual objects but may decrease precision due to more false positives. 
+
+Typically, an IoU threshold of 0.5 is used in many object detection benchmarks, such as the PASCAL VOC dataset. However, this threshold can be adjusted based 
+on the specific requirements of the application and the desired balance between precision and recall. 
+
+In the context of your project, the iou_threshold parameter in the SORT tracker determines how much overlap is required between predicted bounding boxes 
+across frames to consider them as the same object. Adjusting this threshold can influence the tracker's performance in maintaining consistent object identities over time.

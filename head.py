@@ -19,7 +19,7 @@ from config import load_config, open_config_editor
 # Initialize the main application window
 root = tk.Tk()
 root.title("Head Detection with YOLOv5 and SORT Tracking")
-root.geometry("800x650")
+root.geometry("800x660")
 
 # Make the window resizable only in height
 root.resizable(width=False, height=False)
@@ -42,7 +42,9 @@ threading.Thread(target=load_model).start()
 
 # Initialize SORT tracker algorithm
 tracker = Sort(max_age=config["max_age"], min_hits=config["min_hits"], iou_threshold=config["iou_threshold"])
-
+"""
+    iou: Intersection over Union
+"""
 # Global variables for video capture and stopping the thread
 cap = None
 stop_thread = False
@@ -90,7 +92,7 @@ def start_webcam():
 
 #Alarm will only sound once every 10 seconds
 last_alarm_time = 0
-alarm_interval = config["alarm_interval"]  
+alarm_interval = config["alarm_threshold"]  
 # Function for playing an alarm if some condition(in our case >250 people)
 def play_alarm():
     global alarm_playing, last_alarm_time
@@ -193,7 +195,7 @@ def detect_people():
                 lbl_current_count.config(text=f"Current People in Frame: {len(current_ids)}")
 
                 # Play the alarm if more than 10 unique people are detected
-                if len(tracked_ids) > 250:
+                if len(tracked_ids) > alarm_interval:
                     threading.Thread(target=play_alarm).start()
 
                 # Display the frame
@@ -350,7 +352,7 @@ btn_clear_roi.pack(side=tk.LEFT, padx=10)
 
 # Add a button to open the config editor
 btn_edit_config = tk.Button(root, text="Edit Config", command=lambda: open_config_editor(root, config))
-btn_edit_config.pack(pady=20)   # lambda: Delays the execution of open_config_editor until the button is clicked. lambda creates an anonymous function
+btn_edit_config.pack(side=tk.LEFT, anchor=tk.SW, padx=10, pady=10)   # lambda: Delays the execution of open_config_editor until the button is clicked. lambda creates an anonymous function
                                 # use lambda to "wrap" the function call with those arguments.
 """
 Alternative without lambda:
