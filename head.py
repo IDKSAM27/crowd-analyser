@@ -13,43 +13,10 @@ import numpy as np
 from graph_display import show_graph
 # Message function access
 # from msg import sent_to_client
-import json
 
 
 
-# Load configuration from a file
-def load_config(file_path = "config.json"):
-    try:
-        with open(file_path, "r") as f:
-            config = json.load(f)
-        print("Configuration loaded successfully.")
-        return config
-    except Exception as e:
-        print(f"Error loading configuration: {e}")
-        return None
-    
 
-config = load_config()
-if config is None:
-    # Defaults in case loading fails
-    config = {
-        "process_interval": 10,
-        "iou_threshold": 0.3,
-        "max_age": 20,
-        "min_hit": 3,
-        "alarm_threshold": 250,
-        "alarm_interval": 10,
-        "roi_default": [0, 0, 640, 480]
-    }
-
-
-
-def reload_config():
-    global config
-    new_config = load_config()
-    if new_config:
-        config.update(new_config)
-        messagebox.showinfo("Configuration Reloaded", "Configuration parameters updated successfully.")
 
 
 
@@ -398,9 +365,7 @@ btn_select_roi.pack(side=tk.LEFT, padx=10)
 btn_clear_roi = tk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
 btn_clear_roi.pack(side=tk.LEFT, padx=10)
 
-# Reload Configuration
-btn_reload_config = tk.Button(button_frame, text="Reload Config", command=reload_config)
-btn_reload_config.pack(side=tk.LEFT, padx=10)
+
 
 
 # Run the main Tkinter loop
