@@ -13,11 +13,7 @@ import numpy as np
 from graph_display import show_graph
 # Message function access
 # from msg import sent_to_client
-
-
-
-
-
+from config import load_config, open_config_editor
 
 
 # Initialize the main application window
@@ -27,6 +23,9 @@ root.geometry("800x650")
 
 # Make the window resizable only in height
 root.resizable(width=False, height=False)
+
+# Load configuration 
+config = load_config()
 
 # Load the YOLOv5 model
 def load_model():
@@ -108,7 +107,6 @@ def play_alarm():
             print(f"Error playing alarm: {e}")
         finally:
             alarm_playing = False
-
 
 #starts to detect heads of people in every 5th frame of the vid
 #remove try_except(if needed) to understand the rectangle box issue
@@ -217,8 +215,6 @@ def detect_people():
     except Exception as e:
         print(f"Error in detection loop: {e}")
 
-
-
 # Global dictionary to store minute counts
 minute_counts = {}
 tracking_active = True
@@ -244,8 +240,6 @@ def track_minute_counts():
         minute_counts[current_minute] = len(current_minute_ids)
         print(f"{current_minute}: {minute_counts[current_minute]} people detected.")  # Debug output
 
-        
-
 # Function which displays per minute counts also redirects to graph_display.py
 def display_minute_counts():
     
@@ -262,15 +256,12 @@ def display_minute_counts():
     # Display the graph and the summary
     show_graph(minute_counts, graph_type=graph_type)
 
-
 # Start the minute tracking in a separate thread
 minute_thread = threading.Thread(target=track_minute_counts, daemon=True)
 minute_thread.start()
 
-
-
 # Allow us to choose a Region of Interest, in short updates the coordinates of the video and sends it to SORT for tracking
-roi_coords = config["roi_default"]  # Global variable to store ROI coordinates
+roi_coords = None  # Global variable to store ROI coordinates
 
 def select_roi():
     global cap, roi_coords
@@ -299,16 +290,11 @@ def select_roi():
         roi_coords = (x, y, x + w, y + h)
         messagebox.showinfo("Info", f"ROI selected: {roi_coords}")
 
-
-
-
 # Function for clearing the ROI setting or choice
 def set_roi(coords):
     global roi_coords
     roi_coords = coords
     messagebox.showinfo("Info", "ROI cleared and reset to full frame.")
-
-
 
 # Stops or resets all the corresponding variables
 def stop_detection():
@@ -323,8 +309,6 @@ def stop_detection():
     tracked_ids.clear()  # Clear tracked IDs
     current_ids.clear()  # Clear current IDs
     print("Detection stopped.")  # Debugging output
-
-
 
 # Creating GUI elements
 lbl_video = tk.Label(root)
@@ -352,7 +336,6 @@ btn_webcam.pack(side=tk.LEFT, padx=10)
 btn_stop = tk.Button(button_frame, text="Stop Detection", command=stop_detection)
 btn_stop.pack(side=tk.LEFT, padx=10)
 
-
 # Add a display button to the GUI
 btn_display_counts = tk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
 btn_display_counts.pack(side=tk.LEFT, padx=10)
@@ -365,8 +348,16 @@ btn_select_roi.pack(side=tk.LEFT, padx=10)
 btn_clear_roi = tk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
 btn_clear_roi.pack(side=tk.LEFT, padx=10)
 
-
-
+# Add a button to open the config editor
+btn_edit_config = tk.Button(root, text="Edit Config", command=lambda: open_config_editor(root, config))
+btn_edit_config.pack(pady=20)   # lambda: Delays the execution of open_config_editor until the button is clicked. lambda creates an anonymous function
+                                # use lambda to "wrap" the function call with those arguments.
+"""
+Alternative without lambda:
+def open_editor():
+    open_config_editor(root, config)
+btn_edit_config = tk.Button(root, text="Edit Config", command=open_config_editor)
+"""
 
 # Run the main Tkinter loop
 root.mainloop()
