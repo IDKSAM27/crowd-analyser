@@ -1,8 +1,8 @@
 {
-    "process_interval": 5,
+    "process_interval": 10,
     "iou_threshold": 0.3,
     "max_age": 20,
     "min_hits": 3,
-    "alarm_threshold": 60,
+    "alarm_threshold": 250,
     "alarm_interval": 10
 }
