@@ -147,3 +147,4 @@ btn_stop_detection = tk.Button(button_frame, text="Stop Detection", command=stop
 btn_stop_detection.pack(side=tk.LEFT, padx=10)
 
 root.mainloop()
+# Update the dimensions of the video footage upon loading
