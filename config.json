@@ -1,5 +1,5 @@
 {
-    "process_interval": 10,
+    "process_interval": 5,
     "iou_threshold": 0.3,
     "max_age": 20,
     "min_hits": 3,
