@@ -1,3 +1,5 @@
+# remember to add pyqt5 in requirements.txt
+
 import os
 import cv2
 import numpy as np
