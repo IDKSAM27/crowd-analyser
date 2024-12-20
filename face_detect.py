@@ -12,7 +12,7 @@ import face_recognition
 root = tk.Tk()
 root.title("Face Detection and Recognition")
 root.geometry("800x660")
-root.resizable(width=False, height=False)
+root.resizable(width=True, height=True)
 
 # Global variables
 cap = None
@@ -55,11 +55,14 @@ def open_video():
     video_path = filedialog.askopenfilename(title="Select Video File", filetypes=(("MP4 files", ".mp4"), ("All files", ".*")))
 
     if video_path:
+        print(f"Selected video path: {video_path}") # Debugging output
         cap = cv2.VideoCapture(video_path)
         if not cap.isOpened():
             messagebox.showerror("Error", "Could not open video.")
-            return
-        threading.Thread(target=detect_faces).start()
+            print("Error: Could not open video.") # Debugging output  
+        else:
+            print("Video opened successfully.") # Debugging output
+            threading.Thread(target=detect_faces).start()
     else:
         messagebox.showinfo("Info", "No video file selected.")
 
@@ -73,19 +76,13 @@ def start_webcam():
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         messagebox.showerror("Error", "Could not open webcam.")
+        print(f"Error: Could not open webcam.") # Debugging output
         return
 
+    print("Webcam opened successfully.") # Debugging output
     stop_thread = False
     threading.Thread(target=detect_faces).start()
 
-# Stop the detection thread
-def stop_detection():
-    global stop_thread
-    stop_thread = True
-    if cap is not None:
-        cap.release()
-    lbl_video.configure(image='')
-    print("Detection stopped.")
 
 # Detect and recognize faces
 def detect_faces():
@@ -116,8 +113,9 @@ def detect_faces():
             # Label the face
             cv2.putText(frame, name, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
 
-        # Display the frame
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # Resize the frame to fit the label
+        resized_frame = cv2.resize(frame, (lbl_video.winfo_width(), lbl_video.winfo_height()))
+        frame_rgb = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
         img = Image.fromarray(frame_rgb)
         imgtk = ImageTk.PhotoImage(image=img)
         lbl_video.imgtk = imgtk
@@ -127,8 +125,20 @@ def detect_faces():
     cap.release()
     cv2.destroyAllWindows()
 
+
+
+# Stop the detection thread
+def stop_detection():
+    global stop_thread
+    stop_thread = True
+    if cap is not None:
+        cap.release()
+    lbl_video.configure(image='')
+    print("Detection stopped.")
+
+
 # GUI Elements
-lbl_video = tk.Label(root)
+lbl_video = tk.Label(root, width=30, height=30) # Set desired width or height of the video loaded
 lbl_video.pack()
 
 button_frame = tk.Frame(root)
