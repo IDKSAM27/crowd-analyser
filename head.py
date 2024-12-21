@@ -18,7 +18,7 @@ from config import load_config, open_config_editor
 
 # Initialize the main application window
 root = tk.Tk()
-root.title("Head Detection with YOLOv5 and SORT Tracking")
+root.title("Crowd Detection with YOLOv5 and SORT Tracking")
 root.geometry("800x660")
 
 # Make the window resizable only in height
