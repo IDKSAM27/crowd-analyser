@@ -112,7 +112,6 @@ def play_alarm():
             alarm_playing = False
 
 #starts to detect heads of people in every 5th frame of the vid
-#remove try_except(if needed) to understand the rectangle box issue
 def detect_people():
     try:
         global cap, stop_thread, tracked_ids, current_ids, roi_coords
