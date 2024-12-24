@@ -77,7 +77,7 @@ class MainWindow(QMainWindow):
 
         self.video_label = QLabel("Video Stream")
         self.video_label.setAlignment(Qt.AlignCenter)
-        self.video_label.setFixedSize(640, 480)
+        self.video_label.setFixedSize(784, 480)
         self.layout.addWidget(self.video_label)
 
         self.load_button = QPushButton("Load Face Dataset")
