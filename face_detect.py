@@ -159,6 +159,7 @@ if __name__ == "__main__":
 
 
 """
+# For comparison, below system uses tkinter whereas above uses PyQt
 import os
 import cv2
 import numpy as np
