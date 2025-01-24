@@ -185,7 +185,21 @@ on the specific requirements of the application and the desired balance between 
 In the context of your project, the iou_threshold parameter in the SORT tracker determines how much overlap is required between predicted bounding boxes 
 across frames to consider them as the same object. Adjusting this threshold can influence the tracker's performance in maintaining consistent object identities over time.
 
+====================================================================================================================================================================
 
+ttkbootstrap themes:
+    Solar (You already mentioned it, but it’s awesome for a dark vibe!)
+    Darkly (A stylish dark theme with a clean, professional finish.)
+    Cyborg (Futuristic and bold, perfect for tech-oriented apps.)
+    Superhero (A vibrant dark theme with a touch of personality.)
+    Pulse (Modern and elegant, with a subtle neon aesthetic.)
+    Flatly (Minimalist, with a clean and professional appearance.)
+    Morph (Smooth gradients and a unique, contemporary style.)
+    Journal (Light and classic, for apps with a sophisticated feel.)
+    United (Warm and energetic, with a strong color palette.)
+    Sandstone (Soft and earthy, great for user-friendly designs.)
+    Lumen (Bright and vibrant, ideal for lively applications.)
+    Yeti (Clean and simple, with a subtle modern touch.)
 
 ====================================================================================================================================================================
 
