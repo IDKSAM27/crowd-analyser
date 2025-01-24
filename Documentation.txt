@@ -90,8 +90,10 @@ Finally run the head.py and enjoy detecting people!!!
 
 IF! ok IF there are some modules missing (I always make sure to update my requirements.txt) please pip install those modules, everything else would be... just fine!
 
+
 ===============================================================================================================================================================================
 ===============================================================================================================================================================================
+
 
 You may be asking what is yolov5s.pt file (.pt indicates PyTorch file):
 
