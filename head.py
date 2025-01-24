@@ -368,5 +368,3 @@ btn_edit_config = ttk.Button(root, text="Edit Config", command=open_config_edito
 
 # Run the main tkinter loop
 root.mainloop()
-
-# use ttkbootstrap for the gui theme.
