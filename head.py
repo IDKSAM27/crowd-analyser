@@ -9,6 +9,9 @@ import time
 from playsound import playsound
 from sort import Sort
 import numpy as np
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
+from ttkbootstrap import Style
 # The graph_display
 from graph_display import show_graph
 # Message function access
@@ -17,7 +20,9 @@ from graph_display import show_graph
 from config import load_config, open_config_editor
 
 # Initialize the main application window
-root = tk.Tk()
+style = ttk.Style(theme="cyborg")
+root = style.master
+# root = tk.Tk()
 root.title("Crowd Detection with YOLOv5 and SORT Tracking")
 root.geometry("800x660")
 
@@ -313,55 +318,55 @@ def stop_detection():
     print("Detection stopped.")  # Debugging output
 
 # Creating GUI elements
-lbl_video = tk.Label(root)
+lbl_video = ttk.Label(root)
 lbl_video.pack()
 
-lbl_total_count = tk.Label(root, text="Total People Appeared: 0", font=("Arial", 14))
+lbl_total_count = ttk.Label(root, text="Total People Appeared: 0", font=("Arial", 14))
 lbl_total_count.pack()
 
-lbl_current_count = tk.Label(root, text="Current People in Frame: 0", font=("Arial", 14))
+lbl_current_count = ttk.Label(root, text="Current People in Frame: 0", font=("Arial", 14))
 lbl_current_count.pack()
 
-lbl_status = tk.Label(root, text="Loading model...", font=("Arial", 14))
+lbl_status = ttk.Label(root, text="Loading model...", font=("Arial", 14))
 lbl_status.pack()
 
 # Frame for buttons
-button_frame = tk.Frame(root)
+button_frame = ttk.Frame(root)
 button_frame.pack(pady=10)
 
-btn_open_video = tk.Button(button_frame, text="Open Video", command=open_video)
-btn_open_video.pack(side=tk.LEFT, padx=10)
+btn_open_video = ttk.Button(button_frame, text="Open Video", command=open_video)
+btn_open_video.pack(side=ttk.LEFT, padx=10)
 
-btn_webcam = tk.Button(button_frame, text="Start Webcam", command=start_webcam)
-btn_webcam.pack(side=tk.LEFT, padx=10)
+btn_webcam = ttk.Button(button_frame, text="Start Webcam", command=start_webcam)
+btn_webcam.pack(side=ttk.LEFT, padx=10)
 
-btn_stop = tk.Button(button_frame, text="Stop Detection", command=stop_detection)
-btn_stop.pack(side=tk.LEFT, padx=10)
+btn_stop = ttk.Button(button_frame, text="Stop Detection", command=stop_detection)
+btn_stop.pack(side=ttk.LEFT, padx=10)
 
 # Add a display button to the GUI
-btn_display_counts = tk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
-btn_display_counts.pack(side=tk.LEFT, padx=10)
+btn_display_counts = ttk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
+btn_display_counts.pack(side=ttk.LEFT, padx=10)
 
 # ROI (Region of Interest) Selection GUI
-btn_select_roi = tk.Button(button_frame, text="Select ROI", command=select_roi)
-btn_select_roi.pack(side=tk.LEFT, padx=10)
+btn_select_roi = ttk.Button(button_frame, text="Select ROI", command=select_roi)
+btn_select_roi.pack(side=ttk.LEFT, padx=10)
 
 # Clear the ROI
-btn_clear_roi = tk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
-btn_clear_roi.pack(side=tk.LEFT, padx=10)
+btn_clear_roi = ttk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
+btn_clear_roi.pack(side=ttk.LEFT, padx=10)
 
 # Add a button to open the config editor
-btn_edit_config = tk.Button(root, text="Edit Config", command=lambda: open_config_editor(root, config))
-btn_edit_config.pack(side=tk.LEFT, anchor=tk.SW, padx=10, pady=10)   # lambda: Delays the execution of open_config_editor until the button is clicked. lambda creates an anonymous function
+btn_edit_config = ttk.Button(root, text="Edit Config", command=lambda: open_config_editor(root, config))
+btn_edit_config.pack(side=ttk.LEFT, anchor=ttk.SW, padx=10, pady=10)   # lambda: Delays the execution of open_config_editor until the button is clicked. lambda creates an anonymous function
                                 # use lambda to "wrap" the function call with those arguments.
 """
 Alternative without lambda:
 def open_editor():
     open_config_editor(root, config)
-btn_edit_config = tk.Button(root, text="Edit Config", command=open_config_editor)
+btn_edit_config = ttk.Button(root, text="Edit Config", command=open_config_editor)
 """
 
-# Run the main Tkinter loop
+# Run the main tkinter loop
 root.mainloop()
 
 # use ttkbootstrap for the gui theme.
