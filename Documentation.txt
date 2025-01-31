@@ -198,6 +198,6 @@ ttkbootstrap themes:
 ====================================================================================================================================================================
 
 Feedback on the project, 
-    Try to add face detection and history of the person detected (Like, Where was he before?)
+    Try to add face detection and history of the person detected (i.e., Where was he before?)
 
 Last day of the report updation in the CV expo 2024
