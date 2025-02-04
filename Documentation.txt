@@ -204,5 +204,7 @@ Last day of the report updation in the CV expo 2024
 
 ====================================================================================================================================================================
 
+Next goal is to deploy the same project into an android application using Kotlin.
 
+Simple yet smooth UI is what we'll be focusing on.
 
