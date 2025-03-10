@@ -4,7 +4,7 @@
 This project is a Python-based application that uses YOLOv5 for head detection and SORT tracking for object tracking. It provides a graphical user interface (GUI) built with Tkinter 
 to load videos or start webcam-based detection, displays results in real-time, and sounds an alarm when certain thresholds are met.
 
-Also has a [mobile application]() (WIP)
+Also has a [mobile application](https://github.com/IDKSAM27/Crowd_detector) (WIP)
 
 ## Features
 
@@ -55,6 +55,7 @@ Install the required libraries using the following command:
 * `tkinter`
 * `sort` (Include the `sort.py` file in the project directory)
 * `matplotlib`
+* `ttkbootstrap`
 
 
 ## Usage
