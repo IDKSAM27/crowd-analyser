@@ -30,7 +30,8 @@ yet after this you may have to install some additional libraries of frameworks i
 |    How to create a Virtual Environment:                                                   |	                                                                                |
 |        python -m venv .venv    (this will create .venv file in cwd)                       |                                                                                   |
 |                                                                                           |                                                                                   |
-|    (If you wonder where to enter the above, the TERMINAL in your cwd, press "ctrl + `"    |                                                                                   |
+|    (If you wonder where to enter the above stated command, the TERMINAL in your cwd,      |                                                                                   |
+|    press "ctrl + `"                                                                       |                                                                                   |
 |    (depends on the IDE or editor)to open terminal in cwd, make sure you have already      |       {IF YOU'RE CREATING IT VIA NATIVE TERMINAL LIKE CMD}                        |
 |    opened the head.py)                                                                    |       {POWERSHELL,ETC, USE THE COMMANDS FROM THE LEFT TABLE}                      |
 |    (Same as above, all the commands should be entered in the TERMINAL)                    |                                                                                   |
@@ -208,3 +209,13 @@ Next goal is to deploy the same project into an android application using Kotlin
 
 Simple yet smooth UI is what we'll be focusing on.
 
+====================================================================================================================================================================
+
+Config details: 
+    process_interval - Processes the frame after a particualar interval.
+    iou_threshold - (Sets the threshold (p.s., IoU information added above in the documentation)).
+    max_age - The max age to be considered for the count.
+    min_hits - Minimum hits in the frame to be considered as a count.
+    alarm_threshold - The number of count above which the alarm will be activated.
+    alarm_interval - Interval after which the alarm thread will be activated.
+    roi_default - The default region of interest coordinates.
