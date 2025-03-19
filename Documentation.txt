@@ -5,7 +5,7 @@
 
 **Clone this repository into your current working directory(cwd) of your choice.**
 
-installation of yolov5, which would be from github repo (not yet)
+installation of yolov5, which would be from github repo (not to be done yet)
 
 installation of sort.py, again from git repo (not yet) (an update, no need to clone sort repo, the file is already added to my repo) (if you're trying to make your own, then this step is applicable)
 
@@ -18,7 +18,7 @@ lots of requirement:
         pip freeze > requirements.txt
 
     all you have to do is:
-        pip install -r requirements.txt (not yet)
+        pip install -r requirements.txt (not to be done yet)
 
 yet after this you may have to install some additional libraries of frameworks if needed, skim the output and terminal to know which one to install
 
