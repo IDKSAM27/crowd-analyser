@@ -71,6 +71,7 @@ def open_config_editor(root, config):
                 return
         save_config(updated_config, editor)
 
+
     # Save button
     btn_save = tk.Button(editor, text="Save", command=save_changes)
     btn_save.grid(row=6, column=0, columnspan=2, pady=10)

@@ -317,6 +317,16 @@ def stop_detection():
     current_ids.clear()  # Clear current IDs
     print("Detection stopped.")  # Debugging output
 
+def restart_app():
+    global root
+    root.destroy()  # Destroy the existing window
+    root = tk.Tk()  # Recreate the main window
+    root.title("Crowd Detection with YOLOv5 and SORT Tracking")
+    root.geometry("800x660")
+    root.resizable(width=False, height=False)
+    setup_ui()  # Call a function that reinitializes the UI elements
+
+
 # Creating GUI elements
 lbl_video = ttk.Label(root)
 lbl_video.pack()
