@@ -1,6 +1,11 @@
 import json
 import tkinter as tk
 from tkinter import messagebox
+# from head import restart_app
+
+def restart_app():
+    from head import restart_app
+    restart_app()
 
 def load_config():
     # Load the configuration from config.json
@@ -70,6 +75,8 @@ def open_config_editor(root, config):
                 messagebox.showerror("Error", f"Invalid value for {key}: {value}")
                 return
         save_config(updated_config, editor)
+        restart_app()
+
 
     # Save button
     btn_save = tk.Button(editor, text="Save", command=save_changes)
