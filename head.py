@@ -327,54 +327,58 @@ def restart_app():
     setup_ui()  # Call a function that reinitializes the UI elements
 
 
-# Creating GUI elements
-lbl_video = ttk.Label(root)
-lbl_video.pack()
+def setup_ui():
+    global lbl_video, lbl_total_count, lbl_current_count, lbl_status, button_frame
 
-lbl_total_count = ttk.Label(root, text="Total People Appeared: 0", font=("Arial", 14))
-lbl_total_count.pack()
+    # Creating GUI elements
+    lbl_video = ttk.Label(root)
+    lbl_video.pack()
 
-lbl_current_count = ttk.Label(root, text="Current People in Frame: 0", font=("Arial", 14))
-lbl_current_count.pack()
+    lbl_total_count = ttk.Label(root, text="Total People Appeared: 0", font=("Arial", 14))
+    lbl_total_count.pack()
 
-lbl_status = ttk.Label(root, text="Loading model...", font=("Arial", 14))
-lbl_status.pack()
+    lbl_current_count = ttk.Label(root, text="Current People in Frame: 0", font=("Arial", 14))
+    lbl_current_count.pack()
 
-# Frame for buttons
-button_frame = ttk.Frame(root)
-button_frame.pack(pady=10)
+    lbl_status = ttk.Label(root, text="Loading model...", font=("Arial", 14))
+    lbl_status.pack()
 
-btn_open_video = ttk.Button(button_frame, text="Open Video", command=open_video)
-btn_open_video.pack(side=ttk.LEFT, padx=10)
+    # Frame for buttons
+    button_frame = ttk.Frame(root)
+    button_frame.pack(pady=10)
 
-btn_webcam = ttk.Button(button_frame, text="Start Webcam", command=start_webcam)
-btn_webcam.pack(side=ttk.LEFT, padx=10)
+    btn_open_video = ttk.Button(button_frame, text="Open Video", command=open_video)
+    btn_open_video.pack(side=ttk.LEFT, padx=10)
 
-btn_stop = ttk.Button(button_frame, text="Stop Detection", command=stop_detection)
-btn_stop.pack(side=ttk.LEFT, padx=10)
+    btn_webcam = ttk.Button(button_frame, text="Start Webcam", command=start_webcam)
+    btn_webcam.pack(side=ttk.LEFT, padx=10)
 
-# Add a display button to the GUI
-btn_display_counts = ttk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
-btn_display_counts.pack(side=ttk.LEFT, padx=10)
+    btn_stop = ttk.Button(button_frame, text="Stop Detection", command=stop_detection)
+    btn_stop.pack(side=ttk.LEFT, padx=10)
 
-# ROI (Region of Interest) Selection GUI
-btn_select_roi = ttk.Button(button_frame, text="Select ROI", command=select_roi)
-btn_select_roi.pack(side=ttk.LEFT, padx=10)
+    # Add a display button to the GUI
+    btn_display_counts = ttk.Button(button_frame, text="Display Minute Counts", command=display_minute_counts)
+    btn_display_counts.pack(side=ttk.LEFT, padx=10)
 
-# Clear the ROI
-btn_clear_roi = ttk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
-btn_clear_roi.pack(side=ttk.LEFT, padx=10)
+    # ROI (Region of Interest) Selection GUI
+    btn_select_roi = ttk.Button(button_frame, text="Select ROI", command=select_roi)
+    btn_select_roi.pack(side=ttk.LEFT, padx=10)
 
-# Add a button to open the config editor
-btn_edit_config = ttk.Button(root, text="Edit Config", command=lambda: open_config_editor(root, config))
-btn_edit_config.pack(side=ttk.LEFT, anchor=ttk.SW, padx=10, pady=10)   # lambda: Delays the execution of open_config_editor until the button is clicked. lambda creates an anonymous function
-                                # use lambda to "wrap" the function call with those arguments.
-"""
-Alternative without lambda:
-def open_editor():
-    open_config_editor(root, config)
-btn_edit_config = ttk.Button(root, text="Edit Config", command=open_config_editor)
-"""
+    # Clear the ROI
+    btn_clear_roi = ttk.Button(button_frame, text="Clear ROI", command=lambda: set_roi(None))
+    btn_clear_roi.pack(side=ttk.LEFT, padx=10)
 
+    # Add a button to open the config editor
+    btn_edit_config = ttk.Button(root, text="Edit Config", command=lambda: open_config_editor(root, config))
+    btn_edit_config.pack(side=ttk.LEFT, anchor=ttk.SW, padx=10, pady=10)   # lambda: Delays the execution of open_config_editor until the button is clicked. lambda creates an anonymous function
+                                    # use lambda to "wrap" the function call with those arguments.
+    """
+    Alternative without lambda:
+    def open_editor():
+        open_config_editor(root, config)
+    btn_edit_config = ttk.Button(root, text="Edit Config", command=open_config_editor)
+    """
+
+setup_ui()
 # Run the main tkinter loop
 root.mainloop()
