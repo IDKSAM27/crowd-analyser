@@ -1,7 +1,9 @@
 import json
 import tkinter as tk
 from tkinter import messagebox
-
+import sys
+import os
+import subprocess
 
 def load_config():
     # Load the configuration from config.json
@@ -72,6 +74,13 @@ def open_config_editor(root, config):
                 return
         save_config(updated_config, editor)
 
+        # The below code snippet is used to restart the application after saving the configuration
+        python = sys.executable  # This automatically gets the correct Python path
+        script = os.path.abspath(sys.argv[0])  # Get the current script path
+
+        # Start a new process and terminate the current one
+        subprocess.Popen([python, script] + sys.argv[1:])
+        sys.exit()
 
 
     # Save button
