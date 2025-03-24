@@ -30,7 +30,7 @@ def save_config(config, editor=None):
     try:
         with open("config.json", "w") as f:
             json.dump(config, f, indent=4)
-        messagebox.showinfo("Success", "Configuration saved successfully (The application will now restart)")
+        messagebox.showinfo("Success", "Config saved successfully (The application will restart)")
         if editor:
             # Close the editor
             editor.destroy()  
