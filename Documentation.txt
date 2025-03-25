@@ -182,6 +182,17 @@ across frames to consider them as the same object. Adjusting this threshold can 
 
 ====================================================================================================================================================================
 
+Config details: 
+    process_interval - Processes the frame after a particualar interval.
+    iou_threshold - (Sets the threshold (p.s., IoU information added above in the documentation)).
+    max_age - The max age to be considered for the count.
+    min_hits - Minimum hits in the frame to be considered as a count.
+    alarm_threshold - The number of count above which the alarm will be activated.
+    alarm_interval - Interval after which the alarm thread will be activated.
+    roi_default - The default region of interest coordinates.
+
+====================================================================================================================================================================
+
 ttkbootstrap themes:
     Solar (You already mentioned it, but it’s awesome for a dark vibe!)
     Darkly (A stylish dark theme with a clean, professional finish.)
@@ -210,12 +221,3 @@ Next goal is to deploy the same project into an android application using Kotlin
 Simple yet smooth UI is what we'll be focusing on.
 
 ====================================================================================================================================================================
-
-Config details: 
-    process_interval - Processes the frame after a particualar interval.
-    iou_threshold - (Sets the threshold (p.s., IoU information added above in the documentation)).
-    max_age - The max age to be considered for the count.
-    min_hits - Minimum hits in the frame to be considered as a count.
-    alarm_threshold - The number of count above which the alarm will be activated.
-    alarm_interval - Interval after which the alarm thread will be activated.
-    roi_default - The default region of interest coordinates.
