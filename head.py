@@ -20,7 +20,7 @@ from graph_display import show_graph
 from config import load_config, open_config_editor
 
 # Initialize the main application window
-style = ttk.Style(theme="flatly")
+style = ttk.Style(theme="morph")
 root = style.master
 # root = tk.Tk()
 root.title("Crowd Detection with YOLOv5 and SORT Tracking")
