@@ -132,3 +132,8 @@ This project is licensed under the [MIT](https://choosealicense.com/licenses/mit
 * [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5) for the object detection model.
 * [SORT Tracker](https://github.com/abewley/sort) for multi-object tracking.
 * Community contributions for libraries like OpenCV, Tkinter, and PyTorch.
+
+
+##  Contact
+
+For questions, issues, or suggestions, feel free to open an issue or contact [me](mailto:sampreetpatil@proton.me).
