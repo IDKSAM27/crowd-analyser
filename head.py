@@ -6,7 +6,7 @@ from tkinter import messagebox, filedialog
 from PIL import Image, ImageTk
 import threading
 import time
-from playsound import playsound
+import pygame
 from sort import Sort
 import numpy as np
 import ttkbootstrap as ttk
@@ -18,6 +18,8 @@ from graph_display import show_graph
 # from msg import sent_to_client
 # Load and open window for configuration of some imp variables
 from config import load_config, open_config_editor
+
+pygame.mixer.init()
 
 # Initialize the main application window
 style = ttk.Style(theme="morph")
@@ -110,7 +112,11 @@ def play_alarm():
             # Look at Documentation.txt for more information on dynamic path
             script_dir = os.path.dirname(os.path.abspath(__file__))
             alarm_path = os.path.join(script_dir, "alarm.mp3")
-            playsound(alarm_path)
+            pygame.mixer.music.load(alarm_path)
+            pygame.mixer.music.play()
+            # Wait for the sound to finish playing
+            while pygame.mixer.music.get_busy():
+                time.sleep(0.1)
         except Exception as e:
             print(f"Error playing alarm: {e}")
         finally:
